@@ -37,6 +37,12 @@
               "booking-process/booking-checkout", 
               "booking-process/booking-confirmation"
             ]
+          },
+          {
+            "group": "AI Integration", 
+            "pages": [
+              "mcp-server"
+            ]
           }
         ]
       }
