@@ -1,19 +1,26 @@
----
-title: "Booking Query"
-sidebarTitle: "Booking Query"
-description: "Component allowing users to access reservation details by entering identification credentials"
----
+# Booking Query
 
-The `<bookingQuery>` component allows users to access the details of a specific reservation by entering their identification credentials. When integrated into a web page, this component displays a modal with two fields:
-
-- Reservation identifier (bookingId)
-- PIN code (pinCode)
-
-If the entered data is valid, the user is automatically redirected to the reservation management page, where they can view the associated information. This component is ideal for sites that need to offer quick and secure access to reservations.
+Component allowing users to access reservation details by entering identification credentials.
 
 <Note>
-**Component type:** Reservation lookup | **Fields required:** Booking ID + PIN code | **Redirects to:** Reservation management page
+🔍 **Component type:** Reservation lookup | **Fields required:** Booking ID + PIN code | **Redirects to:** Reservation management page
 </Note>
+
+## Overview
+
+The `<bookingQuery>` component provides a secure way for guests to access their reservations without creating an account. It displays a modal with credential fields for quick booking lookup.
+
+### Modal Fields
+
+<CardGroup cols={2}>
+  <Card title="Booking ID" icon="hashtag" color="#0ea5e9">
+    Unique reservation identifier provided in confirmation email
+  </Card>
+  
+  <Card title="PIN Code" icon="lock" color="#10b981">
+    Security code sent with booking confirmation
+  </Card>
+</CardGroup>
 
 ## Basic Implementation
 
@@ -43,23 +50,40 @@ If the entered data is valid, the user is automatically redirected to the reserv
 
 ## Use Cases
 
-<CardGroup cols={1}>
-  <Card title="Guest Self-Service" icon="user">
-    Allow guests to quickly access their reservations without creating an account
-  </Card>
+<Tabs>
+  <Tab title="Guest Services">
+    <Card title="Self-Service Portal" icon="user">
+      Allow guests to quickly access their reservations without creating an account. Perfect for:
+      - Checking booking details
+      - Viewing room information
+      - Accessing hotel policies
+    </Card>
+  </Tab>
   
-  <Card title="Booking Management" icon="calendar-check">
-    Enable guests to view, modify, or cancel their existing reservations
-  </Card>
+  <Tab title="Booking Management">
+    <Card title="Modification Options" icon="calendar-check">
+      Enable guests to manage existing reservations:
+      - Modify dates (if allowed)
+      - Update guest information
+      - Cancel bookings
+      - Add special requests
+    </Card>
+  </Tab>
   
-  <Card title="Quick Access" icon="clock">
-    Provide immediate access to booking details using only booking ID and PIN
-  </Card>
-</CardGroup>
+  <Tab title="Quick Access">
+    <Card title="Instant Lookup" icon="thumbs-up">
+      Provide immediate access using minimal credentials:
+      - No registration required
+      - Works on any device
+      - Secure PIN validation
+      - Direct access to booking
+    </Card>
+  </Tab>
+</Tabs>
 
-## Implementation Example
+## Implementation Examples
 
-**Homepage integration:**
+<Accordion title="Homepage Integration">
 ```html
 <section class="guest-services">
   <h2>Access Your Reservation</h2>
@@ -68,21 +92,54 @@ If the entered data is valid, the user is automatically redirected to the reserv
   <div data-mirai-component="bookingQuery"></div>
 </section>
 ```
+</Accordion>
 
-**Footer link:**
+<Accordion title="Custom Button Style">
+```html
+<div data-mirai-component="bookingQuery">
+  <button class="custom-booking-btn">
+    <i class="icon-calendar"></i> Manage My Booking
+  </button>
+</div>
+```
+</Accordion>
+
+<Accordion title="Footer Implementation">
 ```html
 <footer>
   <div class="footer-links">
     <h4>Guest Services</h4>
-    <div data-mirai-component="bookingQuery">
-      <button>Manage My Booking</button>
-    </div>
+    <ul>
+      <li>
+        <div data-mirai-component="bookingQuery">
+          <a href="#">Check Reservation</a>
+        </div>
+      </li>
+      <li><a href="/contact">Contact Us</a></li>
+      <li><a href="/policies">Hotel Policies</a></li>
+    </ul>
   </div>
 </footer>
 ```
+</Accordion>
+
+## Best Practices
+
+<Warning>
+Ensure guests receive their booking ID and PIN code in the confirmation email. Without these credentials, they cannot access their reservation through this component.
+</Warning>
+
+### Placement Recommendations
+
+| Location | Purpose | Example |
+|----------|---------|---------|
+| Header/Navigation | Quick access for returning guests | Top-right corner link |
+| Homepage | Prominent guest service feature | Hero section or sidebar |
+| Footer | Standard site-wide access | Guest services section |
+| Contact Page | Support alternative | Below contact form |
 
 ---
 
 <Info>
-**Need help setting up booking query?** Contact us at [support@hotellinkage.com](mailto:support@hotellinkage.com)
+💬 **Need help setting up booking query?** Contact us at [support@hotellinkage.com](mailto:support@hotellinkage.com)
 </Info>

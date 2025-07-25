@@ -1,6 +1,26 @@
 # Booking Confirmation
 
-The `<booking>` component displays a detailed summary of the confirmed reservation after payment is completed. This is Step 3 of the booking flow.
+Display complete reservation details and confirmation number after successful payment. The final step of the booking journey.
+
+<Note>
+✅ **Step 3 of 3** | **Component:** `<booking>` | **URL:** `/booking-confirmation`
+</Note>
+
+## What Guests Receive
+
+<CardGroup cols={3}>
+  <Card title="Confirmation Number" icon="hashtag" color="#10b981">
+    Unique booking reference and PIN code
+  </Card>
+  
+  <Card title="Booking Details" icon="envelope" color="#0ea5e9">
+    Dates, room type, guest info, and total price
+  </Card>
+  
+  <Card title="Hotel Information" icon="building" color="#8b5cf6">
+    Address, contact details, and check-in instructions
+  </Card>
+</CardGroup>
 
 ## Basic Implementation
 
@@ -10,6 +30,7 @@ The `<booking>` component displays a detailed summary of the confirmed reservati
 
 ## Complete Page Template
 
+<Accordion title="View full HTML template">
 ```html
 <!DOCTYPE html>
 <html>
@@ -28,11 +49,42 @@ The `<booking>` component displays a detailed summary of the confirmed reservati
 </body>
 </html>
 ```
+</Accordion>
 
 <Warning>
-Use this component on a dedicated page without additional content to maintain focus on the booking confirmation details.
+⚠️ **Important:** Use this component on a dedicated page without additional content to maintain focus on the booking confirmation details.
 </Warning>
+
+## Page Requirements
+
+| Requirement | Value | Purpose |
+|-------------|-------|---------|
+| URL | `/booking-confirmation` | Standard booking flow URL |
+| Meta robots | `noindex, nofollow` | Prevent search indexing |
+| Auto-email | Sent automatically | Backup confirmation |
+| Component | `<booking>` only | Clear confirmation display |
+
+## After Confirmation
+
+<Tabs>
+  <Tab title="Email Confirmation">
+    Guests automatically receive an email with:
+    - Booking reference number
+    - PIN code for modifications
+    - Complete reservation details
+    - Hotel contact information
+  </Tab>
+  
+  <Tab title="Manage Booking">
+    Guests can later access their booking using:
+    - [Booking Query](/components/booking-query) component
+    - Booking ID + PIN from confirmation
+    - Modify or cancel options (if allowed)
+  </Tab>
+</Tabs>
 
 ---
 
-**Booking process complete!** Guests can now manage their reservation using the [Booking Query](/components/booking-query) component.
+<Info>
+🎉 **Booking process complete!** Guests can manage their reservation anytime using the [Booking Query](/components/booking-query) component.
+</Info>

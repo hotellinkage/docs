@@ -1,6 +1,26 @@
 # Room Selection
 
-The `<rates>` component displays available rooms and rates for guests to select and begin the booking process. This is Step 1 of the booking flow.
+Display available rooms and rates for guests to choose from. This is the first step where booking decisions are made.
+
+<Note>
+🏨 **Step 1 of 3** | **Component:** `<rates>` | **URL:** `/booking-rooms`
+</Note>
+
+## What Guests See
+
+<CardGroup cols={3}>
+  <Card title="Room Gallery" icon="images" color="#0ea5e9">
+    Photos and virtual tours of each room type
+  </Card>
+  
+  <Card title="Rates & Availability" icon="tag" color="#10b981">
+    Real-time pricing with available dates
+  </Card>
+  
+  <Card title="Amenities" icon="star" color="#8b5cf6">
+    Features, services, and room details
+  </Card>
+</CardGroup>
 
 ## Basic Implementation
 
@@ -10,6 +30,7 @@ The `<rates>` component displays available rooms and rates for guests to select 
 
 ## Complete Page Template
 
+<Accordion title="View full HTML template">
 ```html
 <!DOCTYPE html>
 <html>
@@ -28,11 +49,23 @@ The `<rates>` component displays available rooms and rates for guests to select 
 </body>
 </html>
 ```
+</Accordion>
 
 <Warning>
-Use this component on a dedicated page without additional content. Adding headers, footers, or other elements may affect functionality.
+⚠️ **Important:** Use this component on a dedicated page without additional content. Adding headers, footers, or other elements may affect functionality.
 </Warning>
+
+## Page Requirements
+
+| Requirement | Value | Purpose |
+|-------------|-------|---------|
+| URL | `/booking-rooms` | Standard booking flow URL |
+| Meta robots | `noindex, nofollow` | Prevent search indexing |
+| Viewport | `width=device-width` | Mobile responsiveness |
+| Component | `<rates>` only | Clean, focused experience |
 
 ---
 
-**Next Step:** [Checkout](/booking-process/booking-checkout)
+<Info>
+**Next Step →** [Proceed to Checkout](/booking-process/booking-checkout)
+</Info>

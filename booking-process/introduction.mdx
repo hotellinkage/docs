@@ -1,21 +1,57 @@
 # Booking Process
 
-After checking availability with the finder component, guests begin a three-step booking process: room selection, payment, and confirmation. Each step takes place on a separate page with a specific component, without additional content, for an optimized booking experience.
+Transform searches into confirmed bookings with our streamlined three-step process. Each step uses a dedicated component on its own page for a focused, conversion-optimized experience.
 
-## Process Steps
+<Note>
+⚡ **Quick Overview:** 3 steps • 3 pages • 3 components • Zero distractions
+</Note>
 
-The booking flow consists of three pages:
+## How It Works
 
-- **[Room Selection](/booking-process/booking-rooms)** - Display available rooms and rates
-- **[Checkout](/booking-process/booking-checkout)** - Collect guest information and payment  
-- **[Confirmation](/booking-process/booking-confirmation)** - Show booking summary and details
+<Steps>
+  <Step title="Search">
+    Guest uses `<finder>` to check availability
+  </Step>
+  
+  <Step title="Book">
+    Complete the 3-step booking flow
+  </Step>
+  
+  <Step title="Confirm">
+    Receive instant booking confirmation
+  </Step>
+</Steps>
 
-## URL Structure
+## The Booking Flow
 
-| Page | URL | Component |
-|------|-----|-----------|
-| Room Selection | `/booking-rooms` | `<rates>` |
-| Checkout | `/booking-checkout` | `<checkout>` |
-| Confirmation | `/booking-confirmation` | `<booking>` |
+<CardGroup cols={3}>
+  <Card title="1. Room Selection" icon="bed" color="#0ea5e9" href="/booking-process/booking-rooms">
+    Browse and choose from available rooms
+  </Card>
+  
+  <Card title="2. Checkout" icon="credit-card" color="#10b981" href="/booking-process/booking-checkout">
+    Enter guest details and payment
+  </Card>
+  
+  <Card title="3. Confirmation" icon="thumbs-up" color="#8b5cf6" href="/booking-process/booking-confirmation">
+    View booking details and reference
+  </Card>
+</CardGroup>
 
-Each component is designed to work independently and should be placed on dedicated pages without extra content that could distract from the booking process.
+## Technical Setup
+
+| Step | Page URL | Component | Purpose |
+|:----:|----------|:---------:|---------|
+| 1️⃣ | `/booking-rooms` | `<rates>` | Display available rooms |
+| 2️⃣ | `/booking-checkout` | `<checkout>` | Process payment |
+| 3️⃣ | `/booking-confirmation` | `<booking>` | Show confirmation |
+
+<Warning>
+💡 **Best Practice:** Keep each page dedicated to its component only. No headers, footers, or additional content that might distract from conversion.
+</Warning>
+
+---
+
+<Info>
+**Ready to start?** → [Set up Room Selection](/booking-process/booking-rooms)
+</Info>

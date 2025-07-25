@@ -1,6 +1,26 @@
 # Checkout
 
-The `<checkout>` component allows guests to enter personal information and complete payment for their selected room. This is Step 2 of the booking flow.
+Secure payment processing where guests complete their booking with personal details and payment information.
+
+<Note>
+💳 **Step 2 of 3** | **Component:** `<checkout>` | **URL:** `/booking-checkout`
+</Note>
+
+## What Guests Complete
+
+<CardGroup cols={3}>
+  <Card title="Guest Details" icon="user-edit" color="#0ea5e9">
+    Name, email, phone, and special requests
+  </Card>
+  
+  <Card title="Payment Info" icon="credit-card" color="#10b981">
+    Secure card processing with multiple options
+  </Card>
+  
+  <Card title="Booking Summary" icon="receipt" color="#8b5cf6">
+    Final price breakdown and policies
+  </Card>
+</CardGroup>
 
 ## Basic Implementation
 
@@ -10,6 +30,7 @@ The `<checkout>` component allows guests to enter personal information and compl
 
 ## Complete Page Template
 
+<Accordion title="View full HTML template">
 ```html
 <!DOCTYPE html>
 <html>
@@ -28,11 +49,35 @@ The `<checkout>` component allows guests to enter personal information and compl
 </body>
 </html>
 ```
+</Accordion>
 
 <Warning>
-Use this component on a dedicated page without additional content. Adding navigation bars or widgets may interrupt the booking experience.
+⚠️ **Important:** Use this component on a dedicated page without additional content. Adding navigation bars or widgets may interrupt the booking experience.
 </Warning>
+
+## Page Requirements
+
+| Requirement | Value | Purpose |
+|-------------|-------|---------|
+| URL | `/booking-checkout` | Standard booking flow URL |
+| Meta robots | `noindex, nofollow` | Prevent search indexing |
+| SSL | Required | Secure payment processing |
+| Component | `<checkout>` only | Focused checkout experience |
+
+## Security Features
+
+<Tabs>
+  <Tab title="PCI Compliance">
+    Payment processing meets PCI DSS standards with tokenized card handling
+  </Tab>
+  
+  <Tab title="Data Protection">
+    Guest information encrypted and processed according to GDPR requirements
+  </Tab>
+</Tabs>
 
 ---
 
-**Next Step:** [Confirmation](/booking-process/booking-confirmation)
+<Info>
+**Next Step →** [View Confirmation](/booking-process/booking-confirmation)
+</Info>

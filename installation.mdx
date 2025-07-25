@@ -3,116 +3,223 @@
 Get your booking engine running in under 10 minutes. Just add 2 files to your website and configure your hotel ID.
 
 <Note>
-**What you need:** Your Hotel Linkage property ID | **Time required:** ~5 minutes
+⚡ **What you need:** Your Hotel Linkage property ID | **Time required:** ~5 minutes
 </Note>
 
-## Add 2 Files
+## Quick Start
+
+<Tabs>
+  <Tab title="Hotel Setup">
+    ```html
+    <!-- Complete example for a single hotel -->
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <!-- Step 1: Add CSS -->
+      <link rel="preload" as="style" 
+            href="https://static.mirai.com/core/index.css"
+            onload="this.onload=null;this.rel='stylesheet'" />
+    </head>
+    <body>
+      <!-- Step 2: Add Hotel Configuration -->
+      <div data-mirai-id="YOUR_HOTEL_ID" 
+           data-currency="USD" 
+           data-locale="en-US"></div>
+      
+      <!-- Step 3: Add JavaScript -->
+      <script type="module" defer 
+              src="https://static.mirai.com/core/index.js" 
+              data-cookieconsent="necessary"></script>
+    </body>
+    </html>
+    ```
+  </Tab>
+  <Tab title="Chain Setup">
+    ```html
+    <!-- Complete example for a hotel chain -->
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <!-- Step 1: Add CSS -->
+      <link rel="preload" as="style" 
+            href="https://static.mirai.com/core/index.css"
+            onload="this.onload=null;this.rel='stylesheet'" />
+    </head>
+    <body>
+      <!-- Step 2: Add Chain Configuration -->
+      <div data-mirai-id="YOUR_CHAIN_ID" 
+           data-type="chain"
+           data-hotel="SPECIFIC_HOTEL_ID"
+           data-currency="EUR" 
+           data-locale="es-ES"></div>
+      
+      <!-- Step 3: Add JavaScript -->
+      <script type="module" defer 
+              src="https://static.mirai.com/core/index.js" 
+              data-cookieconsent="necessary"></script>
+    </body>
+    </html>
+    ```
+  </Tab>
+</Tabs>
+
+## Installation Steps
 
 <Steps>
-  <Step title="CSS in Header">
-    Add the stylesheet to your `<head>` section
+  <Step title="Add CSS to Header">
+    Copy and paste the stylesheet link into your `<head>` section
+    
+    ```html
+    <link rel="preload" as="style" 
+          href="https://static.mirai.com/core/index.css"
+          onload="this.onload=null;this.rel='stylesheet'" />
+    ```
   </Step>
   
-  <Step title="JavaScript in Body">
-    Add the script at the end of your `<body>`
+  <Step title="Configure Your Property">
+    Add your hotel configuration in the `<body>`
+    
+    ```html
+    <div data-mirai-id="XXXXXXX" 
+         data-currency="USD" 
+         data-locale="en-US"></div>
+    ```
+    
+    <Warning>
+    Replace `XXXXXXX` with your actual Hotel Linkage property ID
+    </Warning>
   </Step>
   
-  <Step title="Configure Hotel">
-    Set your hotel ID and preferences
+  <Step title="Add JavaScript">
+    Place the script at the end of your `<body>` tag
+    
+    ```html
+    <script type="module" defer 
+            src="https://static.mirai.com/core/index.js" 
+            data-cookieconsent="necessary"></script>
+    ```
+  </Step>
+  
+  <Step title="Test Your Installation">
+    Save your changes and refresh your page. Check browser console (F12) for any error messages.
+    
+    <Info>
+    If you see errors, contact [support@hotellinkage.com](mailto:support@hotellinkage.com)
+    </Info>
   </Step>
 </Steps>
 
-## Main Files
+## Configuration Options
 
-### Stylesheet
+### Required Configuration
 
-The first file is the default theme stylesheet (index.css), which defines CSS variables without interfering with your project's existing styles. Include it in the `<head>` of your page using the preload technique to optimize performance:
-
-```html
-<link
-  rel="preload"
-  as="style"
-  href="https://static.mirai.com/core/index.css"
-  onload="this.onload=null;this.rel='stylesheet'"
-/>
-```
-
-### Component Script
-
-The second file is the JavaScript component repository (index.js), which uses an asynchronous loading system to minimize impact on page performance. Add it at the end of the `<body>`:
-
-```html
-<script type="module" defer src="https://static.mirai.com/core/index.js" 
-data-cookieconsent="necessary"></script>
-```
-
-## Data Repository Instance
-
-Specify the data repository you want to load using a `<div>` element in the `<body>` of your page. This element identifies the hotel or chain associated with the core and is essential for initializing the components:
-
-```html
-<div data-mirai-id="XXXXXXX"></div>
-```
-
-### Configuration Attributes
-
-<CardGroup cols={1}>
-  <Card title="data-mirai-id" icon="key">
-    **Type:** `string` (required)  
-    Unique identifier of the hotel or chain
-  </Card>
+<Card title="data-mirai-id" icon="key" color="#ef4444">
+  **Type:** `string` *(required)*  
+  Your unique hotel or chain identifier
   
+  <Info>
+  If you don't have your mirai-id, contact [support@hotellinkage.com](mailto:support@hotellinkage.com)
+  </Info>
+</Card>
+
+### Optional Configuration
+
+<CardGroup cols={2}>
   <Card title="data-type" icon="inbox">
     **Type:** `string` **Default:** `"hotel"`  
-    Instance type: "hotel" or "chain"
+    
+    Set to `"chain"` for multi-property setups
   </Card>
   
   <Card title="data-hotel" icon="building">
-    **Type:** `string` **Default:** None  
-    Hotel identifier (only for chains)
+    **Type:** `string`  
+    
+    Specific hotel ID when using chain mode
   </Card>
   
   <Card title="data-currency" icon="dollar-sign">
-    **Type:** `string` **Default:** None  
-    3-letter currency code (e.g., EUR, USD, JPY) that defines the currency for all components
+    **Type:** `string` **Default:** Hotel's default  
+    
+    ISO 4217 code: `EUR`, `USD`, `GBP`, etc.
   </Card>
   
   <Card title="data-locale" icon="globe">
-    **Type:** `string` **Default:** None  
-    Language code (e.g., en-GB, es-ES) that sets the language of the components
+    **Type:** `string` **Default:** Browser language  
+    
+    Format: `language-COUNTRY` (e.g., `en-US`, `es-ES`)
   </Card>
 </CardGroup>
 
+### Language Priority
+
 <Note>
-The data-locale attribute is subject to priority rules. Its value will only be applied if no lang parameter is specified in the page URL and no lang attribute exists in the `<html>` tag of the document. In that case, the latter take priority.
+Language selection follows this priority order:
+1. URL parameter: `?lang=en`
+2. HTML tag: `<html lang="en">`
+3. Configuration: `data-locale="en-US"`
+4. Browser default
 </Note>
 
-## Specific Components
+## Common Issues
 
-The files and data repository form the foundation for the engine to function, but to implement a specific component (e.g., `<rates>` for the room listing or `<finder>` for the search), you must include its specific HTML on the page. Refer to the "Components" subsections for the required markup for each one.
+<Accordion title="Components not showing up">
+  **Solution:** Check that your `data-mirai-id` is correct and that you've added the specific component HTML to your page. Refer to the Components section for the required markup.
+</Accordion>
 
-## Next Steps
+<Accordion title="Console errors about missing property ID">
+  **Solution:** Ensure your configuration div is placed BEFORE the JavaScript file:
+  
+  ```html
+  <!-- ✅ Correct order -->
+  <div data-mirai-id="XXXXXXX"></div>
+  <script src="..."></script>
+  
+  <!-- ❌ Wrong order -->
+  <script src="..."></script>
+  <div data-mirai-id="XXXXXXX"></div>
+  ```
+</Accordion>
+
+<Accordion title="Styles not loading">
+  **Solution:** The preload technique requires JavaScript. For no-JS fallback:
+  
+  ```html
+  <link rel="preload" as="style" 
+        href="https://static.mirai.com/core/index.css"
+        onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript>
+    <link rel="stylesheet" 
+          href="https://static.mirai.com/core/index.css" />
+  </noscript>
+  ```
+</Accordion>
+
+## What's Next?
 
 <CardGroup cols={2}>
-  <Card title="Add Search" icon="binoculars" href="/components/finder">
-    Create your booking search form
+  <Card title="Add Search Bar" icon="magnifying-glass" href="/components/finder">
+    Add the booking search widget to your homepage
   </Card>
   
-  <Card title="Customize Colors" icon="palette" href="/variables">
-    Match your hotel's brand colors
+  <Card title="Create Booking Pages" icon="file-plus" href="/booking-process/introduction">
+    Set up the 5 required booking flow pages
   </Card>
   
-  <Card title="Create Pages" icon="file-plus" href="/booking-process/introduction">
-    Set up your booking flow pages
+  <Card title="Customize Design" icon="palette" href="/variables">
+    Match your hotel's brand with CSS variables
   </Card>
   
-  <Card title="Go Live" icon="rocket" href="/booking-process/booking-rooms">
-    Launch your direct booking system
+  <Card title="Test Booking Flow" icon="route" href="/booking-process/booking-rooms">
+    Walk through a complete test reservation
   </Card>
 </CardGroup>
 
 ---
 
 <Info>
-**Installation help:** Contact us at [support@hotellinkage.com](mailto:support@hotellinkage.com)
+💡 **Pro tip:** Use your browser's Network tab (F12) to verify both files are loading with status 200
+</Info>
+
+<Info>
+💬 **Need help?** Contact support at [support@hotellinkage.com](mailto:support@hotellinkage.com)
 </Info>

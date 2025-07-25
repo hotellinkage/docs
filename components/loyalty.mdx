@@ -1,26 +1,48 @@
----
-title: "Loyalty"
-sidebarTitle: "Loyalty"
-description: "Authentication, registration, and profile management components for your loyalty program"
----
+# Loyalty
 
-This category groups the components that allow users to authenticate, register for the loyalty program, and manage their profile to access exclusive benefits such as preferential rates, special promotions, or other advantages reserved for program members.
+Authentication, registration, and profile management components for your loyalty program.
 
 <Note>
-**Component types:** Authentication, registration, profile management | **Benefits:** Exclusive rates, special promotions, member advantages
+👥 **Component types:** Authentication, registration, profile management | **Benefits:** Exclusive rates, special promotions, member advantages
 </Note>
 
-Below, the three available components, their implementation, and customization options are described.
+## Components Overview
+
+<CardGroup cols={3}>
+  <Card title="Session" icon="user-check" color="#10b981">
+    Login/logout interface with member dropdown menu
+  </Card>
+  
+  <Card title="Signup" icon="user-plus" color="#0ea5e9">
+    Registration form for new loyalty members
+  </Card>
+  
+  <Card title="Profile" icon="user-cog" color="#8b5cf6">
+    Member dashboard with info and reservations
+  </Card>
+</CardGroup>
 
 ## Session Component
 
-This component, `<session>`, allows the user to authenticate as a member of the loyalty program. Its behavior varies depending on the authentication state:
+The `<session>` component handles user authentication with dynamic behavior:
 
-**Not authenticated:** Displays a button that opens a modal with login options, password recovery, and a link to the registration page.
+<Tabs>
+  <Tab title="Not Authenticated">
+    Displays a login button that opens a modal with:
+    - Login form
+    - Password recovery option
+    - Link to registration page
+  </Tab>
+  
+  <Tab title="Authenticated">
+    Shows user's email with dropdown menu containing:
+    - Personal information
+    - Account settings
+    - Reservation list (if applicable)
+  </Tab>
+</Tabs>
 
-**Authenticated:** Shows the user's email address and a dropdown menu with access to personal information, settings, and, if applicable, a list of their reservations.
-
-### How to Implement the Component
+### Basic Implementation
 
 ```html
 <div data-mirai-component="session"></div>
@@ -28,9 +50,9 @@ This component, `<session>`, allows the user to authenticate as a member of the 
 
 ### Customization with Ghosting
 
-This component supports a "ghosting" system to customize its content. You can add HTML markup inside the `<div>` using an element with the `data-ghost` attribute. The first child defines the output for the unauthenticated state, and the second for the authenticated state. Both generate a clickable button that retains the default functionality.
+Customize the component appearance using the ghosting system:
 
-**Basic Example:**
+<Accordion title="Basic ghosting example">
 ```html
 <div data-mirai-component="session">
   <div data-ghost>
@@ -39,8 +61,11 @@ This component supports a "ghosting" system to customize its content. You can ad
   </div>
 </div>
 ```
+The first child = unauthenticated state  
+The second child = authenticated state
+</Accordion>
 
-**Example with Dynamic Data:**
+<Accordion title="Advanced ghosting with styling">
 ```html
 <div data-mirai-component="session">
   <div data-ghost>
@@ -49,12 +74,16 @@ This component supports a "ghosting" system to customize its content. You can ad
   </div>
 </div>
 ```
+</Accordion>
 
-The authenticated state supports dynamic variables such as: `[firstName]`, `[lastName]`, and `[email]`.
+**Available variables for authenticated state:**
+- `[firstName]` - User's first name
+- `[lastName]` - User's last name  
+- `[email]` - User's email address
 
 ## Signup Component
 
-The `<signup>` component displays the registration form for new users to join the loyalty program. Once registered, they gain benefits such as rate discounts and access to exclusive promotions. Registration is completed when the user activates their account via a link received by email, accessing the website again. For this, the hotel's homepage must include `<session>`, which enables authentication after activation.
+The `<signup>` component provides the registration form for new loyalty members.
 
 ### Implementation
 
@@ -62,17 +91,47 @@ The `<signup>` component displays the registration form for new users to join th
 <div data-mirai-component="signup"></div>
 ```
 
-<Note>
-The process requires `<session>` to be present on the main page to handle activation and subsequent login.
-</Note>
+### Registration Process
+
+<Steps>
+  <Step title="User fills form">
+    Complete registration on `/create-account` page
+  </Step>
+  
+  <Step title="Email verification">
+    Activation link sent to user's email
+  </Step>
+  
+  <Step title="Account activation">
+    User clicks link and returns to homepage
+  </Step>
+  
+  <Step title="First login">
+    `<session>` component on homepage enables authentication
+  </Step>
+</Steps>
+
+<Warning>
+The homepage must include `<session>` component to handle account activation and subsequent login.
+</Warning>
 
 ## Profile Component
 
-The `<profile>` component provides authenticated users with an interface featuring two sections:
+The `<profile>` component provides authenticated users with a complete dashboard:
 
-**Personal Information:** Allows editing personal details, changing the password, or deleting the account.
-
-**My Reservations:** Displays a history of past and upcoming reservations.
+<CardGroup cols={2}>
+  <Card title="Personal Information" icon="user-plus">
+    - Edit personal details
+    - Change password
+    - Delete account
+  </Card>
+  
+  <Card title="My Reservations" icon="calendar-check">
+    - View past bookings
+    - Check upcoming stays
+    - Access booking details
+  </Card>
+</CardGroup>
 
 ### Implementation
 
@@ -80,44 +139,46 @@ The `<profile>` component provides authenticated users with an interface featuri
 <div data-mirai-component="profile"></div>
 ```
 
-## URL Structure
+## Required Pages
 
-<CardGroup cols={1}>
-  <Card title="/create-account" icon="user-plus">
-    Registration page with `<signup>` component
-  </Card>
-  
-  <Card title="/my-account" icon="user">
-    User profile page with `<profile>` component
-  </Card>
-  
-  <Card title="Homepage" icon="house">
-    Main page with `<session>` component for login/logout
-  </Card>
-</CardGroup>
+<Table>
+| Page | URL | Component | Purpose |
+|------|-----|-----------|---------|
+| Homepage | `/` | `<session>` | Login/logout interface |
+| Registration | `/create-account` | `<signup>` | New member registration |
+| Profile | `/my-account` | `<profile>` | Member dashboard |
+</Table>
 
-## Component Flow
+## Complete Integration Example
 
-<Steps>
-  <Step title="Authentication">
-    User clicks `<session>` component to login or sees welcome message if authenticated
-  </Step>
-  
-  <Step title="Registration">
-    New users navigate to `/create-account` page with `<signup>` component to join loyalty program
-  </Step>
-  
-  <Step title="Activation">
-    User receives email with activation link and returns to homepage with `<session>` component
-  </Step>
-  
-  <Step title="Profile Management">
-    Authenticated users access `/my-account` page with `<profile>` component to manage details and view reservations
-  </Step>
-</Steps>
+<Accordion title="View full loyalty setup">
+```html
+<!-- Homepage (index.html) -->
+<header>
+  <div data-mirai-component="session">
+    <div data-ghost>
+      <button class="nav-login">Login</button>
+      <span class="nav-user">Hi, [firstName]!</span>
+    </div>
+  </div>
+</header>
+
+<!-- Registration page (/create-account) -->
+<main>
+  <h1>Join Our Loyalty Program</h1>
+  <div data-mirai-component="signup"></div>
+</main>
+
+<!-- Profile page (/my-account) -->
+<main>
+  <h1>My Account</h1>
+  <div data-mirai-component="profile"></div>
+</main>
+```
+</Accordion>
 
 ---
 
 <Info>
-**Need help setting up your loyalty program?** Contact us at [support@hotellinkage.com](mailto:support@hotellinkage.com)
+💬 **Need help setting up your loyalty program?** Contact us at [support@hotellinkage.com](mailto:support@hotellinkage.com)
 </Info>
