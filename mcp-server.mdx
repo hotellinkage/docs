@@ -1,42 +1,43 @@
----
-title: "MCP Server"
-sidebarTitle: "MCP Server"
-description: "Connect Hotel Linkage documentation to Claude AI for instant technical support and code generation"
----
+# MCP Server
 
-The **Model Context Protocol (MCP) Server** enables Claude AI to access and understand Hotel Linkage documentation in real-time. Your development team can get instant answers, code examples, and implementation guidance directly from Claude.
+Connect Hotel Linkage documentation to Claude AI for instant technical support and code generation.
 
 <Note>
-**What it does:** Transforms your Hotel Linkage documentation into AI-powered technical support | **Setup time:** 5 minutes
+🤖 **What it does:** Transforms your Hotel Linkage documentation into AI-powered technical support | **Setup time:** 5 minutes
 </Note>
 
-## What is MCP Server?
+## What is MCP?
 
-MCP (Model Context Protocol) is an open standard that connects AI applications like Claude to external data sources. Our MCP server makes Hotel Linkage documentation **instantly accessible** to Claude AI.
+Model Context Protocol connects Claude AI to Hotel Linkage docs in real-time. Your team gets an AI assistant that knows every detail of the booking engine.
 
-**Real-world example:**
+<Tabs>
+  <Tab title="Example Question">
+    **Developer asks:**  
+    *"How do I add loyalty system to my hotel website?"*
+  </Tab>
+  <Tab title="Claude Response">
+    **Claude answers with:**  
+    *"To add Hotel Linkage loyalty system, you need 3 components: `<session>`, `<signup>`, and `<profile>`..."*
+  </Tab>
+</Tabs>
 
-Developer asks: *"How do I add loyalty system to my hotel website?"*
+## Benefits
 
-Claude responds: *"To add Hotel Linkage loyalty system, you need 3 components..."*
-
-## Benefits for Your Team
-
-<CardGroup cols={1}>
-  <Card title="Instant Technical Support" icon="headset">
-    24/7 AI assistant that knows every detail of Hotel Linkage API and components
+<CardGroup cols={2}>
+  <Card title="Instant Support" icon="headset" color="#10b981">
+    24/7 AI assistant that knows every Hotel Linkage API detail
   </Card>
   
-  <Card title="Code Generation" icon="code">
-    Generate implementation code based on Hotel Linkage exact specifications and best practices
+  <Card title="Code Generation" icon="code" color="#0ea5e9">
+    Generate implementation code based on exact specifications
   </Card>
   
-  <Card title="Troubleshooting" icon="wrench">
-    Debug issues faster with AI that understands your Hotel Linkage configuration and common problems
+  <Card title="Troubleshooting" icon="wrench" color="#f59e0b">
+    Debug faster with AI that understands your configuration
   </Card>
   
-  <Card title="Learning Accelerator" icon="graduation-cap">
-    New team members can learn Hotel Linkage implementation through conversational AI
+  <Card title="Team Learning" icon="graduation-cap" color="#8b5cf6">
+    New developers learn Hotel Linkage through conversation
   </Card>
 </CardGroup>
 
@@ -44,118 +45,116 @@ Claude responds: *"To add Hotel Linkage loyalty system, you need 3 components...
 
 <Steps>
   <Step title="Install Claude Desktop">
-    Download Claude Desktop from claude.ai/desktop
+    Download from [claude.ai/desktop](https://claude.ai/desktop)
   </Step>
   
-  <Step title="Run MCP Installation">
-    Open terminal and run the installation command
+  <Step title="Run Installation">
+    ```bash
+    npx mint-mcp add hotellinkageinc
+    ```
   </Step>
   
   <Step title="Authenticate">
-    When prompted, press Enter to authenticate (no API keys needed for public docs)
+    Press Enter when prompted (no API keys needed)
   </Step>
   
   <Step title="Restart Claude">
-    Close and reopen Claude Desktop to activate the connection
+    Close and reopen Claude Desktop to activate
   </Step>
 </Steps>
 
-## Installation Command
+<Info>
+**Test it:** Ask Claude *"What components does Hotel Linkage provide?"* - If it lists booking components, you're all set!
+</Info>
 
-```bash
-npx mint-mcp add hotellinkageinc
-```
+## Use Cases by Role
 
-## Verify Installation
-
-After setup, test the connection by asking Claude:
-
-*"What components does Hotel Linkage provide for booking engines?"*
-
-If Claude responds with specific Hotel Linkage component information, your MCP server is working perfectly!
-
-## Use Cases
-
-### For Developers
-
+<Accordion title="👨‍💻 Developers">
 **API Integration:**
-Ask: *"How do I implement Hotel Linkage finder component with custom styling?"*
-Get: Exact code examples with CSS variables and HTML attributes
+- Q: *"How do I implement Hotel Linkage finder with custom styling?"*
+- A: Get exact code with CSS variables and attributes
 
-**Troubleshooting:**
-Ask: *"My booking flow isn't working, what could be wrong?"*
-Get: Step-by-step debugging guide with common solutions
+**Debugging:**
+- Q: *"My booking flow isn't working, what's wrong?"*
+- A: Step-by-step troubleshooting guide
+</Accordion>
 
-### For Project Managers
-
+<Accordion title="📊 Project Managers">
 **Feature Planning:**
-Ask: *"What booking process pages do I need for Hotel Linkage?"*
-Get: Complete list with URL structure and required components
+- Q: *"What pages do I need for Hotel Linkage booking?"*
+- A: Complete URL structure and components list
 
-### For Support Teams
+**Timeline Estimation:**
+- Q: *"How long to implement loyalty program?"*
+- A: Detailed breakdown with requirements
+</Accordion>
 
-**Customer Questions:**
-Ask: *"How do customers customize Hotel Linkage colors?"*
-Get: Detailed CSS variables guide with examples
+<Accordion title="🎧 Support Teams">
+**Customer Help:**
+- Q: *"How do customers customize colors?"*
+- A: CSS variables guide with examples
 
-## Advanced Configuration
+**Common Issues:**
+- Q: *"What causes booking errors?"*
+- A: Troubleshooting checklist
+</Accordion>
 
-### Custom Claude Instructions
+## Pro Tips
 
-Enhance Claude's responses by adding context about your specific implementation:
-
-*"When helping with Hotel Linkage, consider our hotel uses primary color #BF993F and mobile-first design approach"*
-
-### Multiple Team Members
-
-Each team member can install the MCP server independently. All installations point to the same Hotel Linkage documentation source.
+<CardGroup cols={2}>
+  <Card title="Be Specific" icon="pencil">
+    ❌ "How to add search?"  
+    ✅ "How to implement Hotel Linkage finder in React?"
+  </Card>
+  
+  <Card title="Add Context" icon="layer-group">
+    Mention your stack: "Show Hotel Linkage for Next.js with TypeScript"
+  </Card>
+  
+  <Card title="Request Examples" icon="code">
+    Always ask for "working code examples" for ready-to-use snippets
+  </Card>
+  
+  <Card title="Follow Up" icon="comments">
+    Ask "Common issues with this?" for proactive troubleshooting
+  </Card>
+</CardGroup>
 
 ## Troubleshooting
 
-<CardGroup cols={1}>
-  <Card title="Claude doesn't recognize Hotel Linkage" icon="question-circle">
-    **Solution:** Restart Claude Desktop and ask specifically about "Hotel Linkage booking engine components"
+<Tabs>
+  <Tab title="❓ Claude doesn't recognize Hotel Linkage">
+    **Fix:** Restart Claude Desktop and ask about "Hotel Linkage booking engine components"
+  </Tab>
+  <Tab title="⚠️ Installation fails">
+    **Fix:** Install Node.js first, then run:
+    ```bash
+    npm install -g @mintlify/mcp
+    ```
+  </Tab>
+  <Tab title="🔄 Outdated responses">
+    **Fix:** MCP auto-syncs. Wait 5 minutes or restart Claude Desktop
+  </Tab>
+</Tabs>
+
+## Security
+
+<CardGroup cols={3}>
+  <Card title="Public Docs Only" icon="shield-check" color="#10b981">
+    No private data or API keys shared
   </Card>
   
-  <Card title="Installation command fails" icon="terminal">
-    **Solution:** Ensure you have Node.js installed and try npm install -g @mintlify/mcp first
+  <Card title="Read-Only" icon="eye" color="#0ea5e9">
+    Claude can't modify your implementation
   </Card>
   
-  <Card title="Outdated responses" icon="refresh">
-    **Solution:** MCP server automatically syncs with latest docs. Wait 5 minutes or restart Claude Desktop
+  <Card title="Local Processing" icon="arrow-right" color="#8b5cf6">
+    All AI processing follows Anthropic's privacy policy
   </Card>
 </CardGroup>
-
-## Security & Privacy
-
-<CardGroup cols={1}>
-  <Card title="Public Documentation Only" icon="shield-check">
-    MCP server only accesses public Hotel Linkage documentation. No private data or API keys shared.
-  </Card>
-  
-  <Card title="Read-Only Access" icon="eye">
-    Claude can read and analyze documentation but cannot modify or access your actual Hotel Linkage implementation.
-  </Card>
-  
-  <Card title="Local Processing" icon="cpu">
-    All AI processing happens in Claude's secure environment according to Anthropic's privacy policy.
-  </Card>
-</CardGroup>
-
-## Getting More Value
-
-**Pro Tips for Maximum Productivity:**
-
-1. **Be Specific:** Ask "How do I implement Hotel Linkage finder in React?" instead of "How do I add search?"
-
-2. **Context Matters:** Mention your tech stack: "Show me Hotel Linkage installation for Next.js project"
-
-3. **Request Examples:** Always ask for "working code examples" to get implementation-ready snippets
-
-4. **Follow Up:** Ask "Are there any common issues with this approach?" for troubleshooting tips
 
 ---
 
 <Info>
-**Need help with MCP setup?** Our team provides white-glove MCP server configuration. Contact us at support@hotellinkage.com or book a demo for personalized assistance.
+💬 **Need help with MCP setup?** Our team provides white-glove configuration. Contact [support@hotellinkage.com](mailto:support@hotellinkage.com)
 </Info>
