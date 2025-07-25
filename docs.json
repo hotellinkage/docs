@@ -63,7 +63,8 @@
   },
   "logo": {
     "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "dark": "/logo/dark.svg",
+    "href": "https://hotellinkage.com"
   },
   "navbar": {
     "links": [
@@ -83,5 +84,14 @@
       "website": "https://hotellinkage.com",
       "linkedin": "https://linkedin.com/company/hotellinkage"
     }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view", 
+      "chatgpt",
+      "claude",
+      "perplexity"
+    ]
   }
 }
