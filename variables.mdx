@@ -1,0 +1,223 @@
+# Variables
+
+Customize your booking engine colors and styling with CSS variables. For most cases, you only need to define one color variable and everything else is generated automatically.
+
+<Note>
+**Quick setup:** Define `--corporative-color` and you're done. All other colors adapt automatically.
+</Note>
+
+## Quick Start
+
+<Steps>
+  <Step title="Create CSS file">
+    Create `linkage-variables.css` with your brand color
+  </Step>
+  
+  <Step title="Include before script">
+    Add the CSS file before the Linkage Direct script
+  </Step>
+</Steps>
+
+**Create your CSS file:**
+
+```css
+:root {   
+  --corporative-color: #BF993F; /* Your brand's primary color */
+}
+```
+
+**Include in your HTML:**
+
+```html
+<link rel="stylesheet" href="path/to/linkage-variables.css" type="text/css" />
+```
+
+## Main Variables
+
+### Corporate Color
+
+The `--corporative-color` variable is the core of customization. It defines your brand's primary color and automatically generates an optimized color palette for the entire core.
+
+| Variable | Purpose | Default |
+|----------|---------|---------|
+| `--corporative-color` | Your brand's primary color | `#2574A9` |
+
+When you set this variable, these colors are automatically generated:
+
+| Generated Variable | Purpose | Default |
+|-------------------|---------|---------|
+| `--mirai-ui-accent` | Accent color (same as corporate) | `#2574A9` |
+| `--mirai-ui-accent-dark` | Darker shade for hover states | `#174868` |
+| `--mirai-ui-accent-light` | Lighter shade for backgrounds | `#669EC3` |
+| `--mirai-ui-accent-border` | Border color variations | `#A8C7DD` |
+| `--mirai-ui-accent-background` | Background tint variations | `#EDF3F8` |
+
+<Warning>
+If you define `--corporative-color`, the generated palette values cannot be modified individually. This ensures visual consistency and accessibility.
+</Warning>
+
+## Button Customization
+
+### Primary Buttons
+
+Override button colors if you need specific styling:
+
+| Variable | Purpose | Default |
+|----------|---------|---------|
+| `--mirai-ui-button-background` | Button background | `#2574A9` |
+| `--mirai-ui-button-background-active` | Background on hover | `#174868` |
+| `--mirai-ui-button-color` | Button text color | `#FFFFFF` |
+| `--mirai-ui-button-color-active` | Text color on hover | `#FFFFFF` |
+
+### Secondary Buttons
+
+Secondary buttons are used for complementary actions:
+
+| Variable | Purpose | Default |
+|----------|---------|---------|
+| `--mirai-ui-button-secondary-background-active` | Background on hover/active | `#EDF3F8` |
+| `--mirai-ui-button-secondary-color` | Button text color | `#2574A9` |
+| `--mirai-ui-button-secondary-color-active` | Text color on hover/active | `#174868` |
+
+**Example:**
+```css
+:root {
+  /* Corporate Color */
+  --corporative-color: #BF993F;
+  
+  /* Primary Buttons */
+  --mirai-ui-button-background: #BF993F;
+  --mirai-ui-button-background-active: #174868;
+  --mirai-ui-button-color: #FFFFFF;
+  --mirai-ui-button-color-active: #FFFFFF;
+  
+  /* Secondary Buttons */
+  --mirai-ui-button-secondary-color: #BF993F;
+  --mirai-ui-button-secondary-color-active: #174868;
+}
+
+## Component Variables
+
+### Finder Component
+
+**General Form:**
+| Variable | Purpose | Default |
+|----------|---------|---------|
+| `--mirai-finder-background` | Form background color | `#FFFFFF` |
+| `--mirai-finder-border` | Form border color | `#DDDDDD` |
+| `--mirai-finder-border-radius` | Form border radius | `4px` |
+| `--mirai-finder-padding` | Form padding | `8px` |
+| `--mirai-finder-gap` | Spacing between fields | `8px` |
+
+**Finder Button:**
+| Variable | Purpose | Default |
+|----------|---------|---------|
+| `--mirai-finder-button-background` | Button background color | `#2574A9` |
+| `--mirai-finder-button-background-active` | Background on hover/active | `#174868` |
+| `--mirai-finder-button-color` | Button text color | `#FFFFFF` |
+| `--mirai-finder-button-color-active` | Text color on hover/active | `#FFFFFF` |
+| `--mirai-finder-button-border-radius` | Button border radius | `4px` |
+| `--mirai-finder-button-font-family` | Button font family | `"Arial", sans-serif` |
+| `--mirai-finder-button-font-weight` | Button font weight | `500` |
+| `--mirai-finder-button-font-size` | Button font size | `14px` |
+
+**Finder Fields:**
+| Variable | Purpose | Default |
+|----------|---------|---------|
+| `--mirai-finder-field-height` | Height of form fields | `52px` |
+| `--mirai-finder-field-border-color` | Field border color | `#DDDDDD` |
+| `--mirai-finder-field-border-style` | Border type | `solid` |
+| `--mirai-finder-field-border-width` | Border width | `0px` |
+| `--mirai-finder-field-border-radius` | Field border radius | `4px` |
+| `--mirai-finder-field-border-active` | Border color when focused | `#174868` |
+| `--mirai-finder-field-separator-color` | Separator color | `#DDDDDD` |
+| `--mirai-finder-field-icon-color` | Icon color in fields | `#333333` |
+
+### Session Component
+
+| Variable | Purpose | Default |
+|----------|---------|---------|
+| `--mirai-session-color` | Text and icon color (unauthenticated) | `#333333` |
+| `--mirai-session-icon-color` | Icon-specific color | `#333333` |
+| `--mirai-session-color-active` | Color on hover/active | `#333333` |
+| `--mirai-session-icon-color-active` | Icon color on hover/active | `#333333` |
+
+## Complete Example
+
+Here's a complete CSS file for Hotel Linkage branding with all available variables:
+
+```css
+/* linkage-variables.css */
+:root {
+  /* Primary Brand Color */
+  --corporative-color: #BF993F;
+  
+  /* Generated Palette (auto-created from corporate color) */
+  --mirai-ui-accent: #BF993F;
+  --mirai-ui-accent-dark: #174868;
+  --mirai-ui-accent-light: #669EC3;
+  --mirai-ui-accent-border: #A8C7DD;
+  --mirai-ui-accent-background: #EDF3F8;
+  
+  /* Primary Button Customization */
+  --mirai-ui-button-background: #BF993F;
+  --mirai-ui-button-background-active: #174868;
+  --mirai-ui-button-color: #FFFFFF;
+  --mirai-ui-button-color-active: #FFFFFF;
+  
+  /* Secondary Button Customization */
+  --mirai-ui-button-secondary-color: #BF993F;
+  --mirai-ui-button-secondary-color-active: #174868;
+  --mirai-ui-button-secondary-background-active: #EDF3F8;
+  
+  /* Finder Component */
+  --mirai-finder-background: #FFFFFF;
+  --mirai-finder-border: #DDDDDD;
+  --mirai-finder-border-radius: 4px;
+  --mirai-finder-padding: 8px;
+  --mirai-finder-gap: 8px;
+  
+  /* Finder Button */
+  --mirai-finder-button-background: #BF993F;
+  --mirai-finder-button-background-active: #174868;
+  --mirai-finder-button-color: #FFFFFF;
+  --mirai-finder-button-color-active: #FFFFFF;
+  --mirai-finder-button-border-radius: 4px;
+  --mirai-finder-button-font-family: "Arial", sans-serif;
+  --mirai-finder-button-font-weight: 500;
+  --mirai-finder-button-font-size: 14px;
+  
+  /* Finder Fields */
+  --mirai-finder-field-height: 52px;
+  --mirai-finder-field-border-color: #DDDDDD;
+  --mirai-finder-field-border-style: solid;
+  --mirai-finder-field-border-width: 0px;
+  --mirai-finder-field-border-radius: 4px;
+  --mirai-finder-field-border-active: #BF993F;
+  --mirai-finder-field-separator-color: #DDDDDD;
+  --mirai-finder-field-icon-color: #333333;
+  
+  /* Session Component */
+  --mirai-session-color: #333333;
+  --mirai-session-icon-color: #BF993F;
+  --mirai-session-color-active: #BF993F;
+  --mirai-session-icon-color-active: #174868;
+  
+  /* General UI */
+  --mirai-ui-border-radius: 4px;
+  --mirai-ui-modal-layer: 10000;
+}
+```
+
+## Additional Variables
+
+| Variable | Purpose | Default |
+|----------|---------|---------|
+| `--mirai-ui-border-radius` | Border radius for UI elements | `4px` |
+| `--mirai-ui-modal-layer` | Z-index for modal windows | `10000` |
+
+---
+
+<Info>
+**Need help with styling?** Contact us at [support@hotellinkage.com](mailto:support@hotellinkage.com)
+</Info>

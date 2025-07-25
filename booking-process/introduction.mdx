@@ -1,0 +1,21 @@
+# Booking Process
+
+After checking availability with the finder component, guests begin a three-step booking process: room selection, payment, and confirmation. Each step takes place on a separate page with a specific component, without additional content, for an optimized booking experience.
+
+## Process Steps
+
+The booking flow consists of three pages:
+
+- **[Room Selection](/booking-process/booking-rooms)** - Display available rooms and rates
+- **[Checkout](/booking-process/booking-checkout)** - Collect guest information and payment  
+- **[Confirmation](/booking-process/booking-confirmation)** - Show booking summary and details
+
+## URL Structure
+
+| Page | URL | Component |
+|------|-----|-----------|
+| Room Selection | `/booking-rooms` | `<rates>` |
+| Checkout | `/booking-checkout` | `<checkout>` |
+| Confirmation | `/booking-confirmation` | `<booking>` |
+
+Each component is designed to work independently and should be placed on dedicated pages without extra content that could distract from the booking process.

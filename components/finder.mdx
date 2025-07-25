@@ -1,0 +1,117 @@
+---
+title: "Finder"
+sidebarTitle: "Finder"
+description: "Main accommodation search interface allowing guests to input dates, occupancy, and destination"
+---
+
+The `<finder>` component renders the main accommodation search interface, allowing users to input parameters such as dates, occupancy, and, in some cases, destination to check availability. This form is the entry point to the booking process, connecting with the hotel's availability and generating results displayed in `<rates>`.
+
+<Note>
+**Component type:** Search interface | **Connects to:** `/booking-rooms` page with `<rates>` component
+</Note>
+
+## Basic Implementation
+
+To add the search component to your HTML page, simply include the following component:
+
+```html
+<div data-mirai-component="finder"></div>
+```
+
+## Property Types
+
+The `<finder>` form varies slightly depending on the configured **data repository** type:
+
+**Individual Hotel:** With `data-type="hotel"` (default), `<finder>` displays a basic form with fields such as check-in/check-out dates and occupancy, associated with the hotel specified in `data-mirai-id`.
+
+**Chain:** With `data-type="chain"`, `<finder>` includes an additional field (a destination select dropdown) for the user to choose a hotel within the chain before searching. Once a hotel is selected, the query and results are generated for that specific hotel.
+
+## Layout Configuration
+
+By default, `<finder>` is displayed **inline** (fields arranged horizontally), ideal for integration in search bars or wide layouts. However, you can customize its layout using HTML attributes:
+
+<CardGroup cols={1}>
+  <Card title="data-layout" icon="layout-grid">
+    **Options:** `"inline"` (default), `"column"`, `"expand"`  
+    • `"column"`: Fields are stacked vertically, useful for narrow spaces  
+    • `"expand"`: Only applies in "inline" mode. Adjusts the form's width to match its parent container
+  </Card>
+  
+  <Card title="data-icon" icon="search">
+    **Options:** `"false"` (default), `"true"`  
+    • `"true"`: Replaces the search button text with a magnifying glass icon
+  </Card>
+</CardGroup>
+
+<Note>
+The combination of `data-layout="column"` and `data-layout="expand"` has no effect, as "column" ignores width adjustments.
+</Note>
+
+## Device-Based Display
+
+`<finder>` can be configured to instantiate selectively based on the device type, using attributes that control its visibility on mobile or desktop environments:
+
+<CardGroup cols={1}>
+  <Card title="data-mobile" icon="smartphone">
+    **Options:** `"true"` (default), `"false"`  
+    Indicates that the component will only instantiate on mobile devices. If omitted or set to `"false"`, there is no mobile-specific restriction.
+  </Card>
+  
+  <Card title="data-desktop" icon="monitor">
+    **Options:** `"true"` (default), `"false"`  
+    Indicates that the component will only instantiate on non-mobile devices (desktop). If omitted or set to `"false"`, there is no desktop-specific restriction.
+  </Card>
+</CardGroup>
+
+<Note>
+**Responsive Behavior:** By default, `<finder>` is fully responsive. On mobile devices (small screens), it adopts a "compact" design that optimizes space, rearranging fields into a more condensed and touch-friendly layout. This mode is activated automatically based on the device size, without requiring additional attributes.
+</Note>
+
+## JavaScript Events
+
+The `<finder>` component supports JavaScript events to interact with its state. These events allow developers to programmatically set field values in the form or detect changes made by users.
+
+### Publishing the setStore Event
+
+Use the `setStore` event to programmatically set values in the form. You can update one or multiple fields at once:
+
+```javascript
+window.Mirai.Event.publish('setStore', {
+  chainSelectorValue: 111222,                    // Hotel or chain ID (in chain mode)
+  calendar: [new Date(), new Date()],            // Check-in and check-out dates
+  hsri: '02080',                                 // Optional unique identifier
+  occupation: [                                  // Occupancy details
+    { ages: [null, null], amount: 2, type: 2 },  // 2 adults
+    { ages: [3], amount: 1, type: 3 },           // 1 child, age 3
+  ],
+  promocode: 'TEST',                             // Promotional code
+});
+```
+
+You can send any combination of `chainSelectorValue`, `calendar`, `hsri`, `occupation`, and `promocode`. Omitted fields are not modified.
+
+### Subscribing to the finderChange Event
+
+Subscribe to the `finderChange` event to detect when the form's state changes (e.g., when a user modifies a field):
+
+```javascript
+window.Mirai.Event.subscribe('finderChange', ({ field, previousValue, value } = {}) => {
+  console.log(`Modified field: ${field}`);
+  console.log(`Previous value: ${previousValue}`);
+  console.log(`New value: ${value}`);
+});
+```
+
+The field parameter can be one of:
+- `"place"` (destination or hotel selection)
+- `"calendar"` (dates)  
+- `"occupation"` (occupancy details)
+- `"promocode"` (promotional code)
+
+These events facilitate integration with custom logic, enabling synchronization of the form with external systems or dynamic reactions to user interactions.
+
+---
+
+<Info>
+**Need help with finder setup?** Contact us at [support@hotellinkage.com](mailto:support@hotellinkage.com)
+</Info>

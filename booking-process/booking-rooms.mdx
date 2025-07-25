@@ -1,0 +1,38 @@
+# Room Selection
+
+The `<rates>` component displays available rooms and rates for guests to select and begin the booking process. This is Step 1 of the booking flow.
+
+## Basic Implementation
+
+```html
+<div data-mirai-component="rates"></div>
+```
+
+## Complete Page Template
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Your Room</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="https://static.mirai.com/core/index.css" type="text/css" media="all" />
+</head>
+<body>
+    <div data-mirai-id="YOUR_HOTEL_ID"></div>
+    <div data-mirai-component="rates"></div>
+    <script type="module" defer src="https://static.mirai.com/core/index.js" 
+            data-cookieconsent="necessary"></script>
+</body>
+</html>
+```
+
+<Warning>
+Use this component on a dedicated page without additional content. Adding headers, footers, or other elements may affect functionality.
+</Warning>
+
+---
+
+**Next Step:** [Checkout](/booking-process/booking-checkout)

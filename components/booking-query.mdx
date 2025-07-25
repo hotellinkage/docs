@@ -1,0 +1,88 @@
+---
+title: "Booking Query"
+sidebarTitle: "Booking Query"
+description: "Component allowing users to access reservation details by entering identification credentials"
+---
+
+The `<bookingQuery>` component allows users to access the details of a specific reservation by entering their identification credentials. When integrated into a web page, this component displays a modal with two fields:
+
+- Reservation identifier (bookingId)
+- PIN code (pinCode)
+
+If the entered data is valid, the user is automatically redirected to the reservation management page, where they can view the associated information. This component is ideal for sites that need to offer quick and secure access to reservations.
+
+<Note>
+**Component type:** Reservation lookup | **Fields required:** Booking ID + PIN code | **Redirects to:** Reservation management page
+</Note>
+
+## Basic Implementation
+
+```html
+<div data-mirai-component="bookingQuery"></div>
+```
+
+## How It Works
+
+<Steps>
+  <Step title="User Access">
+    Guest clicks on the booking query component to open the lookup modal
+  </Step>
+  
+  <Step title="Credential Entry">
+    User enters their reservation identifier (bookingId) and PIN code (pinCode)
+  </Step>
+  
+  <Step title="Validation">
+    System validates the entered credentials against the booking database
+  </Step>
+  
+  <Step title="Redirection">
+    If valid, user is automatically redirected to their reservation management page with full booking details
+  </Step>
+</Steps>
+
+## Use Cases
+
+<CardGroup cols={1}>
+  <Card title="Guest Self-Service" icon="user">
+    Allow guests to quickly access their reservations without creating an account
+  </Card>
+  
+  <Card title="Booking Management" icon="calendar-check">
+    Enable guests to view, modify, or cancel their existing reservations
+  </Card>
+  
+  <Card title="Quick Access" icon="clock">
+    Provide immediate access to booking details using only booking ID and PIN
+  </Card>
+</CardGroup>
+
+## Implementation Example
+
+**Homepage integration:**
+```html
+<section class="guest-services">
+  <h2>Access Your Reservation</h2>
+  <p>Enter your booking details to view or manage your reservation</p>
+  
+  <div data-mirai-component="bookingQuery"></div>
+</section>
+```
+
+**Footer link:**
+```html
+<footer>
+  <div class="footer-links">
+    <h4>Guest Services</h4>
+    <div data-mirai-component="bookingQuery">
+      <button>Manage My Booking</button>
+    </div>
+  </div>
+</footer>
+```
+
+---
+
+<Info>
+**Need help setting up booking query?** Contact us at [support@hotellinkage.com](mailto:support@hotellinkage.com)
+</Info>

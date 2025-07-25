@@ -1,0 +1,38 @@
+# Booking Confirmation
+
+The `<booking>` component displays a detailed summary of the confirmed reservation after payment is completed. This is Step 3 of the booking flow.
+
+## Basic Implementation
+
+```html
+<div data-mirai-component="booking"></div>
+```
+
+## Complete Page Template
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Confirmed</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="https://static.mirai.com/core/index.css" type="text/css" media="all" />
+</head>
+<body>
+    <div data-mirai-id="YOUR_HOTEL_ID"></div>
+    <div data-mirai-component="booking"></div>
+    <script type="module" defer src="https://static.mirai.com/core/index.js" 
+            data-cookieconsent="necessary"></script>
+</body>
+</html>
+```
+
+<Warning>
+Use this component on a dedicated page without additional content to maintain focus on the booking confirmation details.
+</Warning>
+
+---
+
+**Booking process complete!** Guests can now manage their reservation using the [Booking Query](/components/booking-query) component.
