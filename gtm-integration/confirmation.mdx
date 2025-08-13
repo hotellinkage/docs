@@ -1,0 +1,270 @@
+---
+title: 'Confirmation & Cancellation Events'
+description: 'Track completed bookings and cancellations in Linkage Direct'
+icon: 'circle-check'
+---
+
+## Overview
+
+The confirmation page (Booking Step 3) is the most critical tracking point, capturing successful reservations and cancellations. This data is essential for conversion tracking, revenue reporting, and customer insights.
+
+## Event: init (Confirmation)
+
+Fires when a booking is successfully completed.
+
+### Trigger Condition
+- User completes a reservation and reaches the confirmation page
+
+### Data Layer Structure
+
+The confirmation event includes all booking details plus customer information:
+
+<Tabs>
+  <Tab title="Reservation Info">
+    | Parameter | Type | Description |
+    |-----------|------|-------------|
+    | `step` | String | Always `"CONFIRMATION"` |
+    | `reservationCode` | String | Unique booking reference |
+    | `reservationDate` | String | Booking creation date (dd/mm/yyyy) |
+    | `name` | String | Guest first name |
+    | `surname` | String | Guest last name |
+    | `email` | String | Guest email address |
+    | `emailSHA256` | String | SHA-256 hashed email for privacy |
+    | `state_province` | String | Guest state/province |
+    | `city` | String | Guest city |
+  </Tab>
+  
+  <Tab title="Booking Details">
+    All parameters from the client form event, plus:
+    - Complete pricing breakdown
+    - Room and extras details
+    - Occupancy information
+    - Hotel and device data
+  </Tab>
+</Tabs>
+
+<Warning>
+  **Privacy Note**: The confirmation event includes personal information. Ensure your GTM implementation complies with GDPR and other privacy regulations.
+</Warning>
+
+### Complete Example
+
+```javascript
+{
+  "step": "CONFIRMATION",
+  "home": "www.hotelname.com",
+  "hotelId": 10030559,
+  "chainId": null,
+  "hotelName": "Hotel Name",
+  "device": "DESKTOP_TABLET",
+  "language": "en",
+  "checkin": "16/03/2024",
+  "checkout": "19/03/2024",
+  "nights": 3,
+  "country": "US",
+  "coupon": "",
+  "currency": "EUR",
+  "totalPrice": 318.4,  // Deprecated - use totalPriceWithTaxesWithExtras
+  "totalPriceWithTaxesWithExtras": 318.4,
+  "totalPriceWithTaxesWithoutExtras": 297,
+  "totalPriceWithoutTaxesWithExtras": 289.45,
+  "totalPriceWithoutTaxesWithoutExtras": 270,
+  "totalExtrasWithTaxes": 21.4,
+  "totalExtrasWithoutTaxes": 19.45,
+  "totalExtrasTaxes": 1.95,
+  "totalTaxes": 28.95,
+  "numRooms": 1,
+  "numAdults": 2,
+  "numChildren": 0,
+  "numBabies": 0,
+  "name": "John",
+  "surname": "Smith",
+  "state_province": "California",
+  "cityZone": "",
+  "city": "Los Angeles",
+  "email": "john.smith@example.com",
+  "emailSHA256": "2308b48d90cd75da721cc12ae0eb06ca6a050ece28e9f06820c6586e7c097976",
+  "reservationCode": "200312-99907",
+  "reservationDate": "12/03/2024",
+  "products": {
+    "rooms": [{
+      "roomName": "Double Room",
+      "rateName": "Standard Rate",
+      "rateId": "6359|28970b0|0",
+      "boardName": "Room Only",
+      "priceWithoutTaxes": 270,
+      "priceWithTaxes": 297,
+      "unitaryPriceWithoutTaxes": 90,
+      "numRooms": 1,
+      "occupation": {
+        "numAdults": 2,
+        "numChildren": 0,
+        "numBabies": 0
+      }
+    }],
+    "extras": [{
+      "extraId": 840,
+      "extraName": "Champagne Bottle",
+      "amount": 1,
+      "nightsToApply": 1,
+      "totalPriceWithTaxes": 21.40,
+      "totalPriceWithoutTaxes": 19.45,
+      "unitaryPriceWithTaxes": 21.40,
+      "unitaryPriceWithoutTaxes": 19.45
+    }]
+  }
+}
+```
+
+## Event: mirai.cancellation
+
+Triggered when a guest cancels their reservation.
+
+<Warning>
+  The event name `mirai.cancellation` is part of the technical implementation and must be used exactly as shown in your GTM triggers.
+</Warning>
+
+### Trigger Condition
+- Guest accesses booking management and cancels their reservation
+
+### Data Layer Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `step` | String | Always `"CANCELLATION"` |
+| `home` | String | Host domain |
+| `hotelId` | Number | Hotel identifier |
+| `chainId` | Number | Chain identifier |
+| `hotelName` | String | Hotel name |
+| `device` | String | Device type used for cancellation |
+| `language` | String | Interface language |
+| `checkin` | String | Original check-in date |
+| `checkout` | String | Original check-out date |
+| `nights` | Number | Number of nights |
+| `reservationCode` | String | Booking reference |
+| `reservationDate` | String | Original booking date |
+| `cancelDate` | String | Cancellation date |
+| `cancelReason` | String | Reason code (see below) |
+| `cancelComments` | String | Additional comments |
+
+### Cancellation Reason Codes
+
+| Code | Description |
+|------|-------------|
+| `1` | Not traveling |
+| `2` | Booking another hotel |
+| `3` | Found lower price |
+| `4` | Reservation change needed |
+| `5` | Other reasons |
+
+### Example Data Layer
+
+```javascript
+{
+  "step": "CANCELLATION",
+  "home": "www.hotelname.com",
+  "hotelId": 10030559,
+  "chainId": null,
+  "hotelName": "Hotel Name",
+  "device": "DESKTOP_TABLET",
+  "language": "en",
+  "checkin": "16/03/2024",
+  "checkout": "19/03/2024",
+  "nights": 3,
+  "reservationCode": "200305-63571",
+  "reservationDate": "15/06/2024",
+  "cancelDate": "11/07/2024",
+  "cancelReason": "3",  // Found lower price
+  "cancelComments": "Found better rate on another website"
+}
+```
+
+## Conversion Tracking Setup
+
+<AccordionGroup>
+  <Accordion title="Google Ads Conversion">
+    ```javascript
+    // Trigger: Custom Event = init (on CONFIRMATION step)
+    gtag('event', 'conversion', {
+      'send_to': 'AW-XXXXXXXXX/YYYYYYYYY',
+      'value': {{totalPriceWithTaxesWithExtras}},
+      'currency': {{currency}},
+      'transaction_id': {{reservationCode}}
+    });
+    ```
+  </Accordion>
+  
+  <Accordion title="GA4 E-commerce Purchase">
+    ```javascript
+    dataLayer.push({
+      'event': 'purchase',
+      'ecommerce': {
+        'transaction_id': reservationCode,
+        'value': totalPriceWithTaxesWithExtras,
+        'tax': totalTaxes,
+        'currency': currency,
+        'items': products.rooms.map(room => ({
+          'item_id': room.rateId,
+          'item_name': room.roomName,
+          'item_category': room.rateName,
+          'item_variant': room.boardName,
+          'price': room.unitaryPriceWithoutTaxes,
+          'quantity': room.numRooms
+        }))
+      }
+    });
+    ```
+  </Accordion>
+  
+  <Accordion title="Facebook Pixel">
+    ```javascript
+    fbq('track', 'Purchase', {
+      value: totalPriceWithTaxesWithExtras,
+      currency: currency,
+      content_ids: [reservationCode],
+      content_type: 'hotel_booking',
+      num_items: numRooms,
+      checkin_date: checkin,
+      checkout_date: checkout
+    });
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Advanced Analytics
+
+<CardGroup cols={2}>
+  <Card title="Booking Window Analysis" icon="calendar-days">
+    Calculate days between `reservationDate` and `checkin` to understand booking patterns
+  </Card>
+  <Card title="Cancellation Rate" icon="xmark">
+    Track `mirai.cancellation` events against confirmations for cancellation insights
+  </Card>
+  <Card title="Revenue Per Guest" icon="user-dollar">
+    Divide `totalPriceWithTaxesWithExtras` by total occupancy (adults + children)
+  </Card>
+  <Card title="Lead Time Tracking" icon="clock">
+    Monitor how far in advance guests book for demand forecasting
+  </Card>
+</CardGroup>
+
+## Best Practices
+
+<Steps>
+  <Step title="Deduplication">
+    Use `reservationCode` as a unique transaction ID to prevent duplicate conversion tracking
+  </Step>
+  <Step title="Enhanced Conversions">
+    Utilize `emailSHA256` for Google Ads enhanced conversions while maintaining privacy
+  </Step>
+  <Step title="Revenue Attribution">
+    Track both `totalPriceWithTaxesWithExtras` (for revenue) and `totalPriceWithoutTaxesWithoutExtras` (for net revenue)
+  </Step>
+  <Step title="Cancellation Insights">
+    Analyze `cancelReason` codes to identify improvement opportunities
+  </Step>
+</Steps>
+
+<Note>
+  **Important**: The `totalPrice` field is deprecated. Always use `totalPriceWithTaxesWithExtras` for accurate revenue tracking.
+</Note>

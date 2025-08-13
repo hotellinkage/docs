@@ -1,0 +1,99 @@
+---
+title: 'Google Tag Manager Integration'
+description: 'Complete guide for integrating Google Tag Manager with Linkage Direct booking engine'
+icon: 'chart-line'
+---
+
+## Introduction
+
+Linkage Direct provides comprehensive Google Tag Manager (GTM) integration to track user interactions throughout the booking process. This integration enables you to monitor conversions, analyze user behavior, and optimize your marketing efforts.
+
+## Integration Overview
+
+The GTM integration tracks three main booking steps with detailed event data:
+
+<CardGroup cols={3}>
+  <Card title="Room Selection" icon="bed" href="/gtm-integration/room-selection">
+    Track availability searches and room selection events
+  </Card>
+  <Card title="Client Form" icon="user" href="/gtm-integration/client-form">
+    Monitor booking form interactions and extras selection
+  </Card>
+  <Card title="Confirmation" icon="check" href="/gtm-integration/confirmation">
+    Capture reservation completions and cancellations
+  </Card>
+</CardGroup>
+
+## Key Features
+
+- **Real-time Event Tracking**: Capture user interactions as they happen
+- **Comprehensive Data Layer**: Access detailed booking information
+- **E-commerce Ready**: Full support for enhanced e-commerce tracking
+- **Device Detection**: Separate tracking for desktop/tablet and mobile users
+- **Multi-language Support**: Track bookings across all supported languages
+
+## Events Structure
+
+Each booking step triggers specific events that push data to the GTM data layer:
+
+| Booking Step | Event Names | Purpose |
+|-------------|------------|---------|
+| **Step 1: Room Selection** | `init`, `mirai.availability`, `mirai.noAvailability` | Track search queries and availability results |
+| **Step 2: Client Form** | `init` | Capture selected rooms and customer details |
+| **Step 3: Confirmation** | `init`, `mirai.cancellation` | Record completed bookings and cancellations |
+
+<Note>
+  Event names containing "mirai" (like `mirai.availability`) are part of the technical implementation and should not be modified in your GTM configuration.
+</Note>
+
+## Data Layer Structure
+
+All events push structured data to the Google Tag Manager data layer, including:
+
+- **Hotel Information**: Hotel ID, chain ID, hotel name
+- **Booking Details**: Check-in/out dates, number of nights, occupancy
+- **Pricing Data**: Room rates, taxes, extras, total amounts
+- **User Context**: Device type, language, country (via IP)
+- **Reservation Data**: Confirmation codes, customer information
+
+## Getting Started
+
+<Steps>
+  <Step title="Implement GTM Container">
+    Add your Google Tag Manager container code to your Linkage Direct booking engine
+  </Step>
+  <Step title="Configure Events">
+    Set up triggers in GTM for the specific events you want to track
+  </Step>
+  <Step title="Create Tags">
+    Configure tags for Google Analytics, Google Ads, or other marketing platforms
+  </Step>
+  <Step title="Test Implementation">
+    Use GTM Preview mode to verify event firing and data layer values
+  </Step>
+</Steps>
+
+## Implementation Requirements
+
+<AccordionGroup>
+  <Accordion title="Technical Prerequisites">
+    - Active Google Tag Manager account
+    - GTM container ID
+    - Access to Linkage Direct admin panel
+  </Accordion>
+  <Accordion title="Supported Platforms">
+    - Google Analytics 4 (GA4)
+    - Google Ads Conversion Tracking
+    - Facebook Pixel
+    - Custom HTML/JavaScript tags
+  </Accordion>
+</AccordionGroup>
+
+## Support
+
+For assistance with GTM integration:
+- Contact Hotel Linkage support at support@hotellinkage.com
+- Visit our [Premium Support portal](https://supermarket.hotellinkage.net/premiumsupport) for custom implementation requests
+<Info>
+  **Automatic Activation**: The dataLayer events are automatically triggered once Google Tag Manager is detected on your website. No additional activation is required from Hotel Linkage side - simply install your GTM container and the events will start firing immediately.
+</Info>

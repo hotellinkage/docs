@@ -1,0 +1,259 @@
+---
+title: 'Data Layer Reference'
+description: 'Complete reference for all GTM data layer variables in Linkage Direct'
+icon: 'database'
+---
+
+## Overview
+
+This reference provides a comprehensive list of all data layer variables available in the Linkage Direct booking engine GTM integration.
+
+## Event Types Reference
+
+| Event Name | Booking Step | Description |
+|------------|--------------|-------------|
+| `init` | All steps | Initial page load event |
+| `mirai.availability` | Step 1 | Rooms available for search |
+| `mirai.noAvailability` | Step 1 | No rooms available |
+| `mirai.cancellation` | Step 3 | Booking cancellation |
+
+<Note>
+  Events prefixed with `mirai.` are technical implementation names and should not be modified in your GTM configuration.
+</Note>
+
+## Common Variables
+
+These variables are present across multiple events:
+
+| Variable | Type | Events | Description |
+|----------|------|--------|-------------|
+| `step` | String | All | Current booking step identifier |
+| `home` | String | All | Host domain name |
+| `hotelId` | Number | All | Unique hotel identifier |
+| `chainId` | Number | All | Chain identifier (if applicable) |
+| `hotelName` | String | Most | Display name of the hotel |
+| `device` | String | All | `DESKTOP_TABLET` or `MOBILE` |
+| `language` | String | Most | ISO 639-1 language code |
+
+## Booking Information Variables
+
+| Variable | Type | Available In | Description |
+|----------|------|--------------|-------------|
+| `checkin` | String | Availability onwards | Format: dd/mm/yyyy |
+| `checkout` | String | Availability onwards | Format: dd/mm/yyyy |
+| `nights` | Number | Availability onwards | Number of nights |
+| `country` | String | Most events | ISO 3166 alpha-2 code |
+| `coupon` | String | Most events | Promotional code used |
+| `currency` | String | Step 1 onwards | Hotel's base currency (ISO 4217) |
+| `userCurrency` | String | Step 2-3 | Transaction currency |
+
+## Pricing Variables
+
+### Total Pricing
+
+| Variable | Type | Description |
+|----------|------|-------------|
+| `totalPriceWithTaxesWithExtras` | Number | Complete total including everything |
+| `totalPriceWithTaxesWithoutExtras` | Number | Room total with taxes, no extras |
+| `totalPriceWithoutTaxesWithExtras` | Number | Total with extras, excluding taxes |
+| `totalPriceWithoutTaxesWithoutExtras` | Number | Base room price only |
+
+### Component Pricing
+
+| Variable | Type | Description |
+|----------|------|-------------|
+| `totalExtrasWithTaxes` | Number | All extras including taxes |
+| `totalExtrasWithoutTaxes` | Number | Extras excluding taxes |
+| `totalExtrasTaxes` | Number | Tax amount on extras only |
+| `totalTaxes` | Number | All taxes (rooms + extras) |
+
+## Occupancy Variables
+
+| Variable | Type | Description |
+|----------|------|-------------|
+| `numRooms` | Number | Total rooms in booking |
+| `numAdults` | Number | Total adult guests |
+| `numChildren` | Number | Total children |
+| `numBabies` | Number | Total babies |
+
+## Rate Information (Step 1)
+
+Available in `mirai.availability` event:
+
+```javascript
+{
+  "lowestRate": {
+    "roomName": String,
+    "rateName": String,
+    "boardName": String,
+    "unitaryPriceWithOutTaxes": Number,  // Per night
+    "priceWithTaxes": Number,            // Total
+    "occupation": {
+      "numAdults": Number,
+      "numChildren": Number,
+      "numBabies": Number
+    }
+  },
+  "highestRate": {
+    // Same structure as lowestRate
+  }
+}
+```
+
+## Products Object (Steps 2-3)
+
+### Rooms Array Structure
+
+```javascript
+{
+  "rooms": [{
+    "roomName": String,        // Room type name
+    "rateName": String,         // Rate plan name
+    "rateId": String,          // Unique rate identifier
+    "boardName": String,       // Meal plan
+    "priceWithoutTaxes": Number,
+    "priceWithTaxes": Number,
+    "unitaryPriceWithoutTaxes": Number,  // Average per night
+    "numRooms": Number,
+    "occupation": {
+      "numAdults": Number,
+      "numChildren": Number,
+      "numBabies": Number
+    }
+  }]
+}
+```
+
+### Extras Array Structure
+
+```javascript
+{
+  "extras": [{
+    "extraId": Number,         // Unique extra identifier
+    "extraName": String,       // Display name
+    "amount": Number,          // Quantity
+    "nightsToApply": Number,   // Applicable nights
+    "totalPriceWithTaxes": Number,
+    "totalPriceWithoutTaxes": Number,
+    "unitaryPriceWithTaxes": Number,
+    "unitaryPriceWithoutTaxes": Number
+  }]
+}
+```
+
+## Customer Information (Step 3 Only)
+
+| Variable | Type | Description |
+|----------|------|-------------|
+| `name` | String | Guest first name |
+| `surname` | String | Guest last name |
+| `email` | String | Guest email |
+| `emailSHA256` | String | SHA-256 hashed email |
+| `state_province` | String | Guest state/province |
+| `city` | String | Guest city |
+
+## Reservation Details (Step 3)
+
+| Variable | Type | Description |
+|----------|------|-------------|
+| `reservationCode` | String | Unique booking reference |
+| `reservationDate` | String | Booking creation date (dd/mm/yyyy) |
+
+## Cancellation Variables
+
+Available in `mirai.cancellation` event:
+
+| Variable | Type | Description |
+|----------|------|-------------|
+| `cancelDate` | String | Date of cancellation (dd/mm/yyyy) |
+| `cancelReason` | String | Numeric code (1-5) |
+| `cancelComments` | String | Free text explanation |
+
+### Cancel Reason Codes
+
+```javascript
+{
+  "1": "Not traveling",
+  "2": "Booking another hotel",
+  "3": "Found lower price",
+  "4": "Needs reservation change",
+  "5": "Other reasons"
+}
+```
+
+## Data Layer Access in GTM
+
+### Creating Variables
+
+1. **Simple Variable**:
+   ```
+   Variable Type: Data Layer Variable
+   Data Layer Variable Name: hotelId
+   ```
+
+2. **Nested Variable**:
+   ```
+   Variable Type: Data Layer Variable
+   Data Layer Variable Name: mirai.data.lowestRate.priceWithTaxes
+   ```
+
+3. **Array Access**:
+   ```
+   Variable Type: Data Layer Variable
+   Data Layer Variable Name: products.rooms.0.roomName
+   ```
+
+### Custom JavaScript Variables
+
+For complex calculations:
+
+```javascript
+function() {
+  var rooms = {{products.rooms}};
+  if (!rooms || !rooms.length) return 0;
+  
+  var totalRooms = 0;
+  for (var i = 0; i < rooms.length; i++) {
+    totalRooms += rooms[i].numRooms;
+  }
+  return totalRooms;
+}
+```
+
+## Debugging Tips
+
+<AccordionGroup>
+  <Accordion title="GTM Preview Mode">
+    1. Enable Preview mode in GTM
+    2. Navigate through booking flow
+    3. Check Data Layer tab for all pushed values
+    4. Verify event firing on correct pages
+  </Accordion>
+  
+  <Accordion title="Browser Console">
+    ```javascript
+    // Check current data layer state
+    console.log(dataLayer);
+    
+    // Monitor data layer pushes
+    var originalPush = dataLayer.push;
+    dataLayer.push = function() {
+      console.log('Data Layer Push:', arguments);
+      return originalPush.apply(dataLayer, arguments);
+    };
+    ```
+  </Accordion>
+  
+  <Accordion title="Common Issues">
+    - **Missing events**: Check if GTM container is properly installed
+    - **Undefined variables**: Verify the exact path in data layer
+    - **Wrong values**: Ensure you're using the correct event trigger
+    - **Duplicate tracking**: Use transaction ID for deduplication
+  </Accordion>
+</AccordionGroup>
+
+## Support
+
+For technical assistance with GTM integration:
+- Email: support@hotellinkage.com
+- Premium Support: [https://supermarket.hotellinkage.net/premiumsupport](https://supermarket.hotellinkage.net/premiumsupport)

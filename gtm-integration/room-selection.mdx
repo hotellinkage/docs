@@ -1,0 +1,214 @@
+---
+title: 'Room Selection Events'
+description: 'Track user interactions on the room selection page of Linkage Direct'
+icon: 'door-open'
+---
+
+## Overview
+
+The room selection page (Booking Step 1) triggers multiple events to track user search behavior and availability results. These events provide insights into search patterns, conversion rates, and inventory performance.
+
+## Event: init
+
+The `init` event fires when a user first accesses the room selection page.
+
+### Trigger Condition
+- First page load of the room selection/results page
+
+### Data Layer Parameters
+
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `step` | String | Booking step identifier | `"BOOKINGSTEP1"` |
+| `home` | String | Host domain name | `"www.hotelname.com"` |
+| `hotelId` | Number | Hotel identifier (null for chain sites) | `10030559` |
+| `chainId` | Number | Chain identifier (null for hotel sites) | `null` |
+| `device` | String | User device type | `"DESKTOP_TABLET"` or `"MOBILE"` |
+
+### Example Data Layer
+
+```javascript
+{
+  "step": "BOOKINGSTEP1",
+  "home": "www.hotelname.com",
+  "hotelId": 10030559,
+  "chainId": null,
+  "device": "DESKTOP_TABLET"
+}
+```
+
+## Event: mirai.availability
+
+This event fires when rooms are available for the searched dates.
+
+<Warning>
+  The event name `mirai.availability` is part of the technical implementation and must be used exactly as shown in your GTM triggers.
+</Warning>
+
+### Trigger Condition
+- Search query returns available rooms
+
+### Data Layer Structure
+
+The event pushes data to `mirai.data` object with comprehensive booking information:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `step` | String | Booking step name |
+| `home` | String | Host domain |
+| `hotelId` | Number | Hotel identifier |
+| `hotelName` | String | Hotel display name |
+| `device` | String | Device type |
+| `language` | String | Browse language (ISO 639-1) |
+| `checkin` | String | Check-in date (dd/mm/yyyy) |
+| `checkout` | String | Check-out date (dd/mm/yyyy) |
+| `nights` | Number | Number of nights |
+| `country` | String | User country (ISO 3166 alpha 2) |
+| `coupon` | String | Promotional code |
+| `currency` | String | Hotel currency (ISO 4217) |
+| `lowestRate` | Object | Lowest priced option details |
+| `highestRate` | Object | Highest priced option details |
+
+### Rate Object Structure
+
+Both `lowestRate` and `highestRate` contain:
+
+```javascript
+{
+  "roomName": "Double Room",
+  "rateName": "Special Web Offer",
+  "boardName": "Room Only",
+  "unitaryPriceWithOutTaxes": 148,    // Average per night
+  "priceWithTaxes": 740,               // Total with taxes
+  "occupation": {
+    "numAdults": 2,
+    "numChildren": 0,
+    "numBabies": 0
+  }
+}
+```
+
+### Complete Example
+
+```javascript
+{
+  "mirai.data": {
+    "step": "BOOKINGSTEP1",
+    "home": "www.hotelname.com",
+    "hotelId": 10030559,
+    "chainId": null,
+    "hotelName": "Hotel Name",
+    "device": "DESKTOP_TABLET",
+    "language": "en",
+    "checkin": "15/06/2024",
+    "checkout": "18/06/2024",
+    "nights": 3,
+    "country": "US",
+    "coupon": "",
+    "currency": "EUR",
+    "lowestRate": {
+      "roomName": "Standard Double",
+      "rateName": "Web Special Rate",
+      "boardName": "Room Only",
+      "unitaryPriceWithOutTaxes": 148,
+      "priceWithTaxes": 740,
+      "occupation": {
+        "numAdults": 2,
+        "numChildren": 0,
+        "numBabies": 0
+      }
+    },
+    "highestRate": {
+      "roomName": "Junior Suite",
+      "rateName": "Standard Rate with Breakfast",
+      "boardName": "Breakfast Included",
+      "unitaryPriceWithOutTaxes": 283.4,
+      "priceWithTaxes": 1417,
+      "occupation": {
+        "numAdults": 2,
+        "numChildren": 0,
+        "numBabies": 0
+      }
+    }
+  }
+}
+```
+
+## Event: mirai.noAvailability
+
+Triggered when no rooms are available for the searched criteria.
+
+<Warning>
+  The event name `mirai.noAvailability` is part of the technical implementation and must be used exactly as shown in your GTM triggers.
+</Warning>
+
+### Trigger Condition
+- Search query returns no available rooms
+
+### Data Layer Parameters
+
+Similar to the availability event but without rate information:
+
+```javascript
+{
+  "mirai.data": {
+    "step": "BOOKINGSTEP1",
+    "home": "www.hotelname.com",
+    "hotelId": 10030559,
+    "chainId": null,
+    "hotelName": "Hotel Name",
+    "device": "DESKTOP_TABLET",
+    "language": "en",
+    "checkin": "15/06/2024",
+    "checkout": "18/06/2024",
+    "nights": 3,
+    "coupon": ""
+  }
+}
+```
+
+## GTM Implementation Tips
+
+<AccordionGroup>
+  <Accordion title="Creating Triggers">
+    ```javascript
+    // Trigger for availability event
+    Trigger Type: Custom Event
+    Event Name: mirai.availability
+    
+    // Trigger for no availability
+    Trigger Type: Custom Event
+    Event Name: mirai.noAvailability
+    ```
+  </Accordion>
+  
+  <Accordion title="Accessing Data Layer Variables">
+    Create Data Layer Variables in GTM:
+    - Variable Name: `dlv.hotelName`
+    - Data Layer Variable Name: `mirai.data.hotelName`
+  </Accordion>
+  
+  <Accordion title="Enhanced E-commerce Tracking">
+    Use the rate information to populate enhanced e-commerce data:
+    - Product Category: Room Type
+    - Product Name: Room + Rate combination
+    - Price: `unitaryPriceWithOutTaxes`
+  </Accordion>
+</AccordionGroup>
+
+## Common Use Cases
+
+<CardGroup cols={2}>
+  <Card title="Search Abandonment Tracking" icon="magnifying-glass-minus">
+    Track users who search but don't see availability
+  </Card>
+  <Card title="Price Point Analysis" icon="dollar-sign">
+    Analyze the price range between lowest and highest rates
+  </Card>
+  <Card title="Demand Forecasting" icon="chart-line">
+    Monitor search patterns for specific date ranges
+  </Card>
+  <Card title="Conversion Funnel" icon="filter">
+    Measure progression from search to booking
+  </Card>
+</CardGroup>

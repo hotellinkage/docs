@@ -43,6 +43,16 @@
             "pages": [
               "mcp-server"
             ]
+          },
+          {
+            "group": "GTM Integration",
+            "pages": [
+              "gtm-integration/overview",
+              "gtm-integration/room-selection",
+              "gtm-integration/client-form",
+              "gtm-integration/confirmation",
+              "gtm-integration/data-layer-reference"
+            ]
           }
         ]
       }

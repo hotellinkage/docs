@@ -1,0 +1,235 @@
+---
+title: 'Client Form Events'
+description: 'Track user interactions on the booking form and checkout page'
+icon: 'user-edit'
+---
+
+## Overview
+
+The client form page (Booking Step 2) captures detailed information about the selected rooms, extras, and pricing. This step provides crucial data for understanding booking composition and revenue optimization.
+
+## Event: init
+
+The `init` event fires when users reach the client information form after selecting their rooms.
+
+### Trigger Condition
+- User accesses the client form/checkout page
+
+### Data Layer Structure
+
+The client form event provides comprehensive booking details including:
+
+<Tabs>
+  <Tab title="Basic Information">
+    | Parameter | Type | Description |
+    |-----------|------|-------------|
+    | `step` | String | Always `"CLIENTFORM"` |
+    | `home` | String | Host domain name |
+    | `hotelId` | Number | Hotel identifier |
+    | `chainId` | Number | Chain identifier |
+    | `hotelName` | String | Hotel display name |
+    | `device` | String | `"DESKTOP_TABLET"` or `"MOBILE"` |
+    | `language` | String | Browse language (ISO 639-1) |
+  </Tab>
+  
+  <Tab title="Booking Details">
+    | Parameter | Type | Description |
+    |-----------|------|-------------|
+    | `checkin` | String | Check-in date (dd/mm/yyyy) |
+    | `checkout` | String | Check-out date (dd/mm/yyyy) |
+    | `nights` | Number | Total nights |
+    | `country` | String | User country (ISO 3166) |
+    | `coupon` | String | Promotional code |
+    | `currency` | String | Hotel currency (ISO 4217) |
+    | `userCurrency` | String | Transaction currency |
+  </Tab>
+  
+  <Tab title="Pricing Information">
+    | Parameter | Type | Description |
+    |-----------|------|-------------|
+    | `totalPriceWithTaxesWithExtras` | Number | Total with taxes and extras |
+    | `totalPriceWithTaxesWithoutExtras` | Number | Total with taxes, no extras |
+    | `totalPriceWithoutTaxesWithExtras` | Number | Total without taxes, with extras |
+    | `totalPriceWithoutTaxesWithoutExtras` | Number | Base price |
+    | `totalExtrasWithTaxes` | Number | Extras total with taxes |
+    | `totalExtrasWithoutTaxes` | Number | Extras total without taxes |
+    | `totalExtraTaxes` | Number | Taxes on extras |
+    | `totalTaxes` | Number | All taxes |
+  </Tab>
+  
+  <Tab title="Occupancy">
+    | Parameter | Type | Description |
+    |-----------|------|-------------|
+    | `numRooms` | Number | Total rooms in cart |
+    | `numAdults` | Number | Total adults |
+    | `numChildren` | Number | Total children |
+    | `numBabies` | Number | Total babies |
+  </Tab>
+</Tabs>
+
+## Products Object Structure
+
+The `products` object contains detailed breakdowns of rooms and extras:
+
+### Rooms Array
+
+Each room in the booking includes:
+
+```javascript
+{
+  "roomName": "Double Room",
+  "rateName": "Standard Rate Room Only",
+  "rateId": "23434-34654-34535-545",
+  "boardName": "Room Only",
+  "priceWithoutTaxes": 435.25,
+  "priceWithTaxes": 465.23,
+  "unitaryPriceWithoutTaxes": 87.05,  // Per night average
+  "numRooms": 1,
+  "occupation": {
+    "numAdults": 2,
+    "numChildren": 0,
+    "numBabies": 0
+  }
+}
+```
+
+### Extras Array
+
+Each extra/add-on includes:
+
+```javascript
+{
+  "extraId": 83733,
+  "extraName": "Welcome Package",
+  "amount": 2,                         // Quantity
+  "nightsToApply": 1,                  // Nights applicable
+  "totalPriceWithTaxes": 13.20,
+  "totalPriceWithoutTaxes": 12.10,
+  "unitaryPriceWithTaxes": 6.60,       // Per unit price
+  "unitaryPriceWithoutTaxes": 6.05
+}
+```
+
+## Complete Data Layer Example
+
+```javascript
+{
+  "step": "CLIENTFORM",
+  "home": "www.hotelname.com",
+  "hotelId": 10030559,
+  "chainId": null,
+  "hotelName": "Hotel Name",
+  "device": "DESKTOP_TABLET",
+  "language": "en",
+  "checkin": "10/03/2024",
+  "checkout": "15/03/2024",
+  "nights": 5,
+  "country": "US",
+  "coupon": "",
+  "currency": "EUR",
+  "userCurrency": "EUR",
+  "totalPriceWithTaxesWithExtras": 494.93,
+  "totalPriceWithTaxesWithoutExtras": 465.23,
+  "totalPriceWithoutTaxesWithExtras": 462.35,
+  "totalPriceWithoutTaxesWithoutExtras": 435.25,
+  "totalExtrasWithTaxes": 29.70,
+  "totalExtrasWithoutTaxes": 27.10,
+  "totalExtrasTaxes": 2.60,
+  "totalTaxes": 32.58,
+  "numRooms": 1,
+  "numAdults": 2,
+  "numChildren": 0,
+  "numBabies": 0,
+  "products": {
+    "rooms": [{
+      "roomName": "Single Room",
+      "rateName": "Single Room 2 persons Room Only",
+      "rateId": "23434-34654-34535-545",
+      "boardName": "Room Only",
+      "priceWithoutTaxes": 435.25,
+      "priceWithTaxes": 465.23,
+      "unitaryPriceWithoutTaxes": 87.05,
+      "numRooms": 1,
+      "occupation": {
+        "numAdults": 2,
+        "numChildren": 0,
+        "numBabies": 0
+      }
+    }],
+    "extras": [{
+      "extraId": 83733,
+      "extraName": "Wine Package",
+      "amount": 2,
+      "nightsToApply": 1,
+      "totalPriceWithTaxes": 13.20,
+      "totalPriceWithoutTaxes": 12.10,
+      "unitaryPriceWithTaxes": 6.60,
+      "unitaryPriceWithoutTaxes": 6.05
+    }]
+  }
+}
+```
+
+## GTM Implementation
+
+<AccordionGroup>
+  <Accordion title="E-commerce Checkout Tracking">
+    Map the client form data to GA4 E-commerce checkout event:
+    ```javascript
+    dataLayer.push({
+      'event': 'begin_checkout',
+      'ecommerce': {
+        'value': totalPriceWithTaxesWithExtras,
+        'currency': currency,
+        'items': products.rooms.map(room => ({
+          'item_name': room.roomName,
+          'item_category': room.boardName,
+          'price': room.unitaryPriceWithoutTaxes,
+          'quantity': room.numRooms
+        }))
+      }
+    });
+    ```
+  </Accordion>
+  
+  <Accordion title="Cart Abandonment Tracking">
+    Set up remarketing tags to capture users who don't complete booking:
+    - Create audience based on CLIENTFORM step visitors
+    - Exclude users who reach CONFIRMATION step
+    - Include product details for dynamic remarketing
+  </Accordion>
+  
+  <Accordion title="Revenue Tracking Variables">
+    Create calculated variables in GTM:
+    - Average Daily Rate: `totalPriceWithoutTaxesWithoutExtras / nights / numRooms`
+    - Extras Attachment Rate: `totalExtrasWithTaxes / totalPriceWithTaxesWithExtras`
+    - Tax Rate: `totalTaxes / totalPriceWithoutTaxesWithExtras`
+  </Accordion>
+</AccordionGroup>
+
+## Analytics Insights
+
+<CardGroup cols={2}>
+  <Card title="Extras Performance" icon="plus-circle">
+    Track which add-ons are most popular and their contribution to revenue
+  </Card>
+  <Card title="Price Sensitivity" icon="percentage">
+    Analyze the impact of taxes and extras on conversion
+  </Card>
+  <Card title="Occupancy Patterns" icon="users">
+    Understand booking composition (adults, children, rooms)
+  </Card>
+  <Card title="Board Basis Preference" icon="utensils">
+    Monitor which meal plans guests prefer
+  </Card>
+</CardGroup>
+
+## Best Practices
+
+<Note>
+  **Data Privacy**: The client form event doesn't include personal information (name, email) at this stage. This data is only available in the confirmation step.
+</Note>
+
+<Warning>
+  **Currency Handling**: Always use the `userCurrency` field for conversion tracking to ensure accurate revenue reporting in multi-currency setups.
+</Warning>
