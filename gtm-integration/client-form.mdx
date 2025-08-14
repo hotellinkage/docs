@@ -180,7 +180,7 @@ Each extra/add-on includes:
       'event': 'begin_checkout',
       'ecommerce': {
         'value': totalPriceWithTaxesWithExtras,
-        'currency': currency,
+        'currency': userCurrency,  // Use transaction currency
         'items': products.rooms.map(room => ({
           'item_name': room.roomName,
           'item_category': room.boardName,
@@ -231,5 +231,5 @@ Each extra/add-on includes:
 </Note>
 
 <Warning>
-  **Currency Handling**: Always use the `userCurrency` field for conversion tracking to ensure accurate revenue reporting in multi-currency setups.
+  **Currency Handling**: Always use the `userCurrency` field for conversion tracking to ensure accurate revenue reporting in multi-currency setups. The `currency` field represents the hotel's base currency, while `userCurrency` is the actual transaction currency used by the guest.
 </Warning>

@@ -40,6 +40,7 @@ The confirmation event includes all booking details plus customer information:
     - Room and extras details
     - Occupancy information
     - Hotel and device data
+    - **Important**: Use `userCurrency` (not `currency`) for tracking
   </Tab>
 </Tabs>
 
@@ -188,7 +189,7 @@ Triggered when a guest cancels their reservation.
     gtag('event', 'conversion', {
       'send_to': 'AW-XXXXXXXXX/YYYYYYYYY',
       'value': {{totalPriceWithTaxesWithExtras}},
-      'currency': {{currency}},
+      'currency': {{userCurrency}},  // Use transaction currency
       'transaction_id': {{reservationCode}}
     });
     ```
@@ -202,7 +203,7 @@ Triggered when a guest cancels their reservation.
         'transaction_id': reservationCode,
         'value': totalPriceWithTaxesWithExtras,
         'tax': totalTaxes,
-        'currency': currency,
+        'currency': userCurrency,  // Use transaction currency
         'items': products.rooms.map(room => ({
           'item_id': room.rateId,
           'item_name': room.roomName,
@@ -220,7 +221,7 @@ Triggered when a guest cancels their reservation.
     ```javascript
     fbq('track', 'Purchase', {
       value: totalPriceWithTaxesWithExtras,
-      currency: currency,
+      currency: userCurrency,  // Use transaction currency
       content_ids: [reservationCode],
       content_type: 'hotel_booking',
       num_items: numRooms,
