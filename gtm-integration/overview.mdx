@@ -56,44 +56,89 @@ All events push structured data to the Google Tag Manager data layer, including:
 - **User Context**: Device type, language, country (via IP)
 - **Reservation Data**: Confirmation codes, customer information
 
-## Getting Started
+## Implementation Guide
 
-<Steps>
-  <Step title="Implement GTM Container">
-    Add your Google Tag Manager container code to your Linkage Direct booking engine
-  </Step>
-  <Step title="Configure Events">
-    Set up triggers in GTM for the specific events you want to track
-  </Step>
-  <Step title="Create Tags">
-    Configure tags for Google Analytics, Google Ads, or other marketing platforms
-  </Step>
-  <Step title="Test Implementation">
-    Use GTM Preview mode to verify event firing and data layer values
-  </Step>
-</Steps>
+Choose your tracking method based on your needs:
+
+<Tabs>
+  <Tab title="Option 1: Google Analytics Only (Recommended)">
+    ### Simple Setup for GA4 Tracking
+    
+    Perfect if you only need Google Analytics tracking. All events in this documentation will be automatically tracked.
+    
+    <Steps>
+      <Step title="Access GA4 Admin">
+        Go to your Google Analytics 4 property → Admin → Account → Access Management
+      </Step>
+      <Step title="Add Mirai User">
+        Add user: `designhotelsearch@gmail.com` with Editor permissions
+      </Step>
+      <Step title="Confirm Access">
+        Save changes and notify Hotel Linkage support
+      </Step>
+    </Steps>
+    
+    **That's it!** All events will be automatically tracked via Gtag without any additional setup.
+  </Tab>
+  
+  <Tab title="Option 2: Multi-Platform Tracking (Advanced)">
+    ### GTM Setup for Advanced Tracking
+    
+    Required if you need:
+    - Facebook Pixel tracking
+    - Bing Ads conversion tracking
+    - LinkedIn Insight Tag
+    - Custom remarketing tags
+    - Any third-party marketing tools
+    
+    <Steps>
+      <Step title="Create GTM Account">
+        Go to [tagmanager.google.com](https://tagmanager.google.com) and create a container
+        Get your GTM ID (format: GTM-XXXXXXX)
+      </Step>
+      <Step title="Grant Permissions">
+        In GTM → Admin → User Management:
+        - **Account Permissions**: Add `designhotelsearch@gmail.com` as User
+        - **Container Permissions**: Grant Publish access to same email
+      </Step>
+      <Step title="Share GTM ID">
+        Send your GTM-XXXXXXX ID to Hotel Linkage support
+      </Step>
+      <Step title="Configure Tags">
+        Create triggers and tags in GTM using the events documented in this guide
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+<Warning>
+  **Important**: You must grant the correct permissions to `designhotelsearch@gmail.com` for the integration to work. Double-check the email address to avoid delays.
+</Warning>
 
 ## Implementation Requirements
 
 <AccordionGroup>
   <Accordion title="Technical Prerequisites">
-    - Active Google Tag Manager account
-    - GTM container ID
-    - Access to Linkage Direct admin panel
+    - Google Analytics 4 account (for Option 1)
+    - Google Tag Manager account (for Option 2)
+    - Admin access to grant permissions
   </Accordion>
   <Accordion title="Supported Platforms">
     - Google Analytics 4 (GA4)
     - Google Ads Conversion Tracking
     - Facebook Pixel
+    - Bing Ads
+    - LinkedIn Insight Tag
     - Custom HTML/JavaScript tags
   </Accordion>
 </AccordionGroup>
+
+<Info>
+  **Automatic Activation**: The data layer events are automatically activated during the hotel onboarding process. Once you grant the necessary permissions, all events documented here will start firing immediately without any additional configuration required from your side.
+</Info>
 
 ## Support
 
 For assistance with GTM integration:
 - Contact Hotel Linkage support at support@hotellinkage.com
 - Visit our [Premium Support portal](https://supermarket.hotellinkage.net/premiumsupport) for custom implementation requests
-<Info>
-  **Automatic Activation**: The dataLayer events are automatically triggered once Google Tag Manager is detected on your website. No additional activation is required from Hotel Linkage side - simply install your GTM container and the events will start firing immediately.
-</Info>
